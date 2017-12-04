@@ -51,6 +51,8 @@ classes/
 .idea/
 *.iml
 
+mvn-tmpl/
+
 # TO BE DELETED
 StockSearcher/
 TestWrite/
@@ -58,3 +60,4 @@ tomato/
 Searcher/
 TestPlugin/
 TestSocket/
+
