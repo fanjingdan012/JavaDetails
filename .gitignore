@@ -50,3 +50,11 @@ classes/
 .settings/
 .idea/
 *.iml
+
+# TO BE DELETED
+StockSearcher/
+TestWrite/
+tomato/
+Searcher/
+TestPlugin/
+TestSocket/
