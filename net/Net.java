@@ -29,19 +29,18 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class Net { 
 	public static void main(String args[]) throws Exception {		
-		//声明抛出所有例外
-		URL tirc = new URL("http://ppi.fudan.edu.cn/cse/2011/News.html"); 
-		//构建一URL对象
+
+		URL tirc = new URL("https://bbs.fudan.edu.cn/bbs/top10"); 
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(tirc.openStream()));
 		//BufferedWriter out = new BufferedWriter(out);
-	  //使用openStream得到一输入流并由此构造一个BufferedReader对象
+
 	    String inputLine;
-	    while ((inputLine = in.readLine()) != null) //从输入流不断的读数据，直到读完为止
-	    	if(inputLine.contains("Rec")){
-	    		System.out.println(inputLine); //把读入的数据打印到屏幕上
-	    	}
+	    while ((inputLine = in.readLine()) != null) {
+	    	System.out.println(inputLine); 
+	    }
 	    	
-	    in.close(); //关闭输入流
+	    in.close(); 
        
 
 
@@ -231,8 +230,7 @@ s.close(); */
 		return null;*/
 
 
-
-} 
+	} 
 
 
 } 
