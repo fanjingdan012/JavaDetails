@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThreadTest {
+    // gets 81429
     public static void main(String[] args) {  
         final Count count = new Count();
         Runnable runnable = new Runnable() {  
