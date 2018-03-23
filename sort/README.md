@@ -144,9 +144,9 @@ static void quicksort (Comparable[] array, int i, int j) {
     swap (array, pivotindex, j);//change pivot to right side
     int k = partition (array, i-1, j, array[j].key);
     swap (array, k, j);
-		if ((k-i)>1) quicksort (array, i, k-1);
-		//k (i.e. pivot already right
-		if ((j-k)>1) quicksort (array, k+1, j);
+    if ((k-i)>1) quicksort (array, i, k-1);
+    //k (i.e. pivot already right
+    if ((j-k)>1) quicksort (array, k+1, j);
 }
 static int findpivot (Comparable[] array, int i, int j) {
     return j;
@@ -158,7 +158,7 @@ static int partition (Comparable[] array, int l, int r, int pivot) {
         swap(array, l, r);
     } while (l<r);
     swap(array, l, r);
-	  return l;
+    return l;
 }
 ```
 ### Output:
