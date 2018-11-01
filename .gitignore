@@ -50,6 +50,7 @@ classes/
 .settings/
 .idea/
 *.iml
+**/.vscode/**
 
 mvn-tmpl/
 
