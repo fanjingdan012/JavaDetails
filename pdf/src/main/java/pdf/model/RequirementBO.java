@@ -1,4 +1,4 @@
-package pdf;
+package pdf.model;
 
 public class RequirementBO {
   private String name;

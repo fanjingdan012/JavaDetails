@@ -1,26 +1,25 @@
 package pdf.util;
 
-import com.google.common.collect.Maps;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-import pdf.component.PDFKit;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FreeMarkerUtil {
 
   private static final String UTF_8 = "UTF-8";
 
-  private static Map<String, FileTemplateLoader> fileTemplateLoaderCache = Maps.newConcurrentMap();
+  private static Map<String, FileTemplateLoader> fileTemplateLoaderCache = new ConcurrentHashMap();
 
-  private static Map<String, Configuration> configurationCache = Maps.newConcurrentMap();
+  private static Map<String, Configuration> configurationCache = new ConcurrentHashMap();
 
-  public static Configuration getConfiguration(String templateFilePath) {
+  private static Configuration getConfiguration(String templateFilePath) {
     if (null != configurationCache.get(templateFilePath)) {
       return configurationCache.get(templateFilePath);
     }
@@ -43,11 +42,9 @@ public class FreeMarkerUtil {
     return config;
   }
 
-  /**
-   * @description 获取模板
-   */
   public static String getContent(String fileName, Object data) {
-    String classpath = PDFKit.class.getClassLoader().getResource("").getPath();
+    String classpath = FreeMarkerUtil.class.getClassLoader().getResource("").getPath();
+    System.out.println(classpath);
     String templatePath = classpath + "templates/";
 
     try {

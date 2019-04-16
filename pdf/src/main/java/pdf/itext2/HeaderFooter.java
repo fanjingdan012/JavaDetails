@@ -1,3 +1,5 @@
+package pdf.itext2;
+
 import com.itextpdf.text.Document;
 
 import com.itextpdf.text.Element;
@@ -35,7 +37,7 @@ public class HeaderFooter extends PdfPageEventHelper{
 
         }
 
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(String.format("page £¥d", writer.getPageNumber())), (rect.getLeft() + rect.getRight()) / 2, rect.getBottom() - 18, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(String.format("page ï¿½ï¿½d", writer.getPageNumber())), (rect.getLeft() + rect.getRight()) / 2, rect.getBottom() - 18, 0);
 
     }
 
