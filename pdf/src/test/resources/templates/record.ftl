@@ -47,7 +47,7 @@
 
     table {
 
-      width: 70%;
+      width: 100%;
       margin: auto;
 
     }
@@ -63,6 +63,10 @@
     .propertyLabel {
       color: gray;
     }
+    .th{
+      color:white;
+      background-color:#1E90FF;
+    }
   </style>
 </head>
 
@@ -73,6 +77,7 @@
       <h1>${name}</h1>
       <h3>${category}</h3>
       <p>Status:${status}</p>
+      <div><a href="${iTextUrl}">iText官网</a></div>
     </div>
 
     <div class="genInfo">
@@ -98,13 +103,17 @@
       <table border="1" cellspacing=0 cellpadding=0>
 
         <tr>
-          <td><b>Name</b></td>
-          <td><b>Status</b></td>
+          <td class="th"><b>Name</b></td>
+          <td class="th"><b>Status</b></td>
+          <td class="th"><b>Description</b></td>
+          <td class="th"><b>Creator</b></td>
         </tr>
         <#list requirements as item>
           <tr>
             <td>${item.name}</td>
             <td>${item.status}</td>
+            <td>${item.description1}</td>
+            <td>${item.creator}</td>
           </tr>
         </#list>
       </table>

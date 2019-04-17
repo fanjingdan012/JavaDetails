@@ -39,7 +39,9 @@ public class DataUtil {
     List<RequirementBO> requirements = new ArrayList<RequirementBO>();
     for (int i = 0; i < 10; i++) {
       RequirementBO r = new RequirementBO();
-      r.setName("requirement" + i
+      r.setCreator("judy.fan@sap.com");
+      r.setName("requirement "+i);
+      r.setDescription1("somelooooooooooooooooooooooooooooooglongemail@somecompany.com"
           + " very long text very long text very long text very long text very long text very long"
           + " text very long text very long text very long text very long text very long text");
       r.setStatus("Draft");

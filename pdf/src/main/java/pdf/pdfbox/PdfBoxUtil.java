@@ -3,9 +3,14 @@ package pdf.pdfbox;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDBorderStyleDictionary;
 import pdf.model.RegulationBO;
 
 import java.io.File;
@@ -127,6 +132,27 @@ public class PdfBoxUtil {
       contentStream.showText("Status: " + bo.getStatus());
       contentStream.endText();
 
+      //add a hyperlink
+      PDBorderStyleDictionary borderULine = new PDBorderStyleDictionary();
+      borderULine.setStyle(PDBorderStyleDictionary.STYLE_UNDERLINE);
+      PDAnnotationLink txtLink = new PDAnnotationLink();
+      txtLink.setBorderStyle(borderULine);
+      PDActionURI action = new PDActionURI();
+      action.setURI("https://pdfbox.apache.org/");
+      txtLink.setAction(action);
+      PDRectangle position = new PDRectangle();
+      position.setLowerLeftX(50.0f);
+      position.setLowerLeftY(620.0f);
+      position.setUpperRightX(400.0f);
+      position.setUpperRightY(640.0f);
+      txtLink.setRectangle(position);
+      page.getAnnotations().add(txtLink);
+      contentStream.beginText();
+      contentStream.setFont(font, 20);
+      contentStream.newLineAtOffset(50f, 620f);
+      contentStream.showText("PDF box url hyperlink");
+      contentStream.endText();
+
       contentStream.beginText();
       float x = 50.0f;
       contentStream.setFont(font, 20);
@@ -182,7 +208,7 @@ public class PdfBoxUtil {
     }
 
     String[][] content =
-        {{"Num", "Name", "Status"}, {"1", "requirement1", "Draft"}, {"2", "requirement1", "Draft"},
+        {{"Num", "Name", "Status"}, {"1", "requirement1 long long text long long text", "Draft"}, {"2", "requirement1", "Draft"},
             {"3", "requirement1", "Draft"}, {"4", "requirement1", "Draft"}};
 
     drawTable(page, contentStream, 400f, 50f, content);

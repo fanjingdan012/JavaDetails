@@ -16,6 +16,7 @@ public class RegulationBO {
   private String validPeriod;
   private String category;
   private String status;
+  private String iTextUrl = "https://itextpdf.com/en";
 
   public String getImageUrl() {
     return imageUrl;
@@ -95,5 +96,13 @@ public class RegulationBO {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public String getiTextUrl() {
+    return iTextUrl;
+  }
+
+  public void setiTextUrl(String iTextUrl) {
+    this.iTextUrl = iTextUrl;
   }
 }
