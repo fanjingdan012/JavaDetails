@@ -1,0 +1,173 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pdfHtml header and footer example</title>
+    <style>
+        h2 {
+      display: block;
+      border-bottom: 1px solid black
+    }
+        table {
+        border-collapse: collapse;
+      width: 100%;
+      margin: auto;
+    }
+    td {
+      padding-top: 10;
+      padding-bottom: 10;
+      padding-right: 10;
+      text-align: left;
+    }
+
+    .propertyLabel {
+      color: gray;
+    }
+
+    .th {
+
+      background-color: #CCC;
+    }
+
+    .colTable td {
+      text-align: left;
+    }
+
+    .answer {
+      margin-left: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .rHeader {
+      padding: 5px;
+    }
+    </style>
+</head>
+<body>
+
+<div class="rHeader">
+    <h2>Hire to retire</h2>
+    <h3>1,251</h3>
+    <table class="colTable" cellspacing=0 cellpadding=0>
+        <tr>
+            <td width="30%"><b>Administrative Data</b></td>
+            <td width="20%"><b>Status</b></td>
+            <td width="20%"><b>Version</b></td>
+            <td width="30%"><b>Evaluation Result</b></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="propertyLabel">Created On: 2019-04-30</div>
+                <div class="propertyLabel">Created By: User A</div>
+                <div class="propertyLabel">Updated On: 2019-04-30</div>
+                <div class="propertyLabel">Updated By: User A</div>
+            </td>
+            <td>Published</td>
+            <td>2</td>
+            <td>DPIA required</td>
+        </tr>
+    </table>
+</div>
+<div class="genInfo">
+    <h2>General Information</h2>
+    <table class="colTable" cellspacing=0 cellpadding=0>
+        <tr>
+            <td width="50%">
+                <p class="propertyLabel">Name</p>
+                <p>Hire to retire</p>
+                <p class="propertyLabel">Description</p>
+                <p>This is the record for the Business process hire to retire</p>
+            </td>
+            <td width="50%">
+                <p class="propertyLabel">Type</p>
+                <p>Records of Processing Activities</p>
+                <p class="propertyLabel">Template</p>
+                <p>Records of Processing Activities Version 1</p>
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <h2>Owners</h2>
+    <table border="1" cellspacing=0 cellpadding=0>
+        <tr>
+            <td class="th"><b>Type</b></td>
+            <td class="th"><b>User Id</b></td>
+        </tr>
+        <tr>
+            <td>Business Owner</td>
+            <td>judy.fan@sap.com</td>
+        </tr>
+        <tr>
+            <td>Business Owner</td>
+            <td>judy.fan@sap.com</td>
+        </tr>
+        <tr>
+            <td>Business Owner</td>
+            <td>judy.fan@sap.com</td>
+        </tr>
+    </table>
+</div>
+<div>
+    <h2>Linked Records</h2>
+    <table border="1" cellspacing=0 cellpadding=0>
+        <tr>
+            <td class="th"><b>Type</b></td>
+            <td class="th"><b>Business Id</b></td>
+            <td class="th"><b>Name</b></td>
+        </tr>
+        <tr>
+            <td>DPIA</td>
+            <td>12,354,646</td>
+            <td>Record Name</td>
+        </tr>
+    </table>
+</div>
+<div>
+    <h2>Record Details</h2>
+    <div>
+        <h3>Answered</h3>
+        <p>Outside EU or International Organisation:</p>
+        <p class="answer">No(2)</p>
+        <p>Process Description:</p>
+        <p class="answer">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
+            dolores et ea rebum.</p>
+        <p>Data Subject:</p>
+        <p class="answer">All (1), Nothing (2)</p>
+        <p>Deletion Period according to Retention Policy:</p>
+        <p class="answer">Yes(1)</p>
+        <p>Data are evaluted:</p>
+        <p class="answer">No(2)</p>
+        <p>Legal Basis:</p>
+        <p class="answer">Others(05)</p>
+    </div>
+    <div>
+        <h3>Not Answered</h3>
+        <p>Blocking Concept:</p> <br />
+        <p>Blocking Concept:</p> <br />
+    </div>
+</div>
+<div>
+<h2>Evaluation Results</h2>
+<table border="1">
+    <tr>
+        <td class="th">Name</td>
+        <td class="th">Status</td>
+        <td class="th">Description</td>
+        <td class="th">Creator</td>
+    </tr>
+    <tr>
+        <td>This Record</td>
+        <td>DPIA required</td>
+        <td>There are some critical answers in the form. Please provide a DPIA in addition.</td>
+        <td>2019-04-30</td>
+    </tr>
+</table>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+
+</body>
+</html>
