@@ -25,6 +25,7 @@ public class PrintABC10 {
                             e.printStackTrace();
                         }
                     }
+
                     System.out.println("A" + i);
                     flag = 1;
                     conditionB.signal(); //signal B

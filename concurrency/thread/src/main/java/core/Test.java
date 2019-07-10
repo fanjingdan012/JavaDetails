@@ -10,34 +10,28 @@ public class Test {
 
   public static void main(String[] args) {
 
-    new Thread() {
-      public void run() {
-        try {
-          if (b) {
-            print(1);
-          }
-          b.notify();
-          b.wait();
-        } catch (InterruptedException e) {
-          e.printStackTrace();
+    new Thread(() -> {
+      try {
+        if (b) {
+          print(1);
         }
+        b.notify();
+        b.wait();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
+    }).start();
 
-      ;
-    }.start();
-
-    new Thread() {
-      public void run() {
-        try {
-          if (!b) {
-            print(2);
-          }
-          b.notify();
-          b.wait();
-        } catch (InterruptedException e) {
-          e.printStackTrace();
+    new Thread(() -> {
+      try {
+        if (!b) {
+          print(2);
         }
+        b.notify();
+        b.wait();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
-    }.start();
+    }).start();
   }
 }
