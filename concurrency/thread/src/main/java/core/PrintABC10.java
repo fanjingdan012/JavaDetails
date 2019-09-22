@@ -9,8 +9,8 @@ public class PrintABC10 {
     static Condition conditionA = lock.newCondition(); //Condition is on lock
     static Condition conditionB = lock.newCondition();
     static Condition conditionC = lock.newCondition();
-
     private static int flag = 0;
+
     public static void main(String[] args) {
 
         new Thread(() -> {

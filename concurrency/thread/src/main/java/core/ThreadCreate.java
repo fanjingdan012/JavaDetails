@@ -1,7 +1,6 @@
 package core;
 
 
-
 public class ThreadCreate {
     public static void main(String[] args) {
         for (int i = 0; i <= 10; i++) {
@@ -11,6 +10,7 @@ public class ThreadCreate {
         }
     }
 }
+
 class Calculator implements Runnable {
 
     private int number;
