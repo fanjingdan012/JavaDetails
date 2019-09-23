@@ -22,7 +22,7 @@ public class Base64UtilTest {
     public void testDecode1() throws Exception {
         String s1 = "INZHS4DUN5NDCZJUGQ======";
         final Base64.Decoder decoder = Base64.getDecoder();
-//        System.out.println(EncodeUtil.bytes2Hex(decoder.decode("INZHS4DUN5NDCZJUGQ==")).toUpperCase());
+        System.out.println(EncodeUtil.bytes2Hex(decoder.decode("INZHS4DUN5NDCZJUGQ==")).toUpperCase());
         System.out.println(EncodeUtil.bytes2Hex(decoder.decode("20D6474B80D437934309925419==")).toUpperCase());
         System.out.println(EncodeUtil.bytes2Hex(decoder.decode("DB40FAE3BE01F340F8DFBF77E37D3DF76E78D7==")).toUpperCase());
 System.out.println(EncodeUtil.hex2String("0C1E34140137044D35177E3417C0C5045EFB137EC3DC317BE84EFC0F"));

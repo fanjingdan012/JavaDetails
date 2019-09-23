@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class FileUtilTest {
@@ -71,6 +73,28 @@ public class FileUtilTest {
 //            }
         }
 
+    }
+
+    @Test
+    public void test(){
+        List<String> result = FileUtil.readTxtFileIntoStringArrList("hacked_dates.txt");
+        HashMap<String,Integer> histo = new HashMap<>();
+
+        for(String dateStr:result){
+            String[] ss = dateStr.split("/");
+
+            String date = new Date(Integer.parseInt(ss[2])-1900,Integer.parseInt(ss[1])-1,Integer.parseInt(ss[0])).toString();
+            System.out.println(date);
+            String weekday = date.substring(0,3);
+            Integer times = histo.get(weekday);
+            if(times==null){
+                times =0;
+
+            }
+            times++;
+            histo.put(weekday,times);
+        }
+        System.out.println(histo);
     }
 
 

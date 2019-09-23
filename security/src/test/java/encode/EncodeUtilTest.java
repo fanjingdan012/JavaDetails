@@ -50,4 +50,15 @@ public class EncodeUtilTest {
         String result = new String(bytes);
         System.out.println(result);
     }
+
+    @Test
+    public void solveBufferOverflow(){
+        //"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1234567890qwertyuiopasdfghjklzxcvbn9^E"
+        System.out.println(EncodeUtil.int2Hex(1337));
+        System.out.println(EncodeUtil.hex2String("a66b6ea8"));
+        System.out.println(EncodeUtil.hex2String(EncodeUtil.int2Hex(1337)));
+    }
+
+
+
 }

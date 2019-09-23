@@ -104,9 +104,10 @@ public class HashUtilTest {
             System.out.println(EncodeUtil.hex2String(decoded));
         }
 
-        System.out.println(Base64Util.encode(EncodeUtil.string2Hex("00" + HashUtil.md5("admin") + HashUtil.sha1("admin"))));
-        assertEquals(lines.get(0),Base64Util.encode(EncodeUtil.string2Hex("01" + HashUtil.md5("123456") + HashUtil.sha1("123456"))));
-        System.out.println("00"+HashUtil.md5("admin")+ HashUtil.sha1("admin"));
+        System.out.println(Base64Util.encode(EncodeUtil.string2Hex("79" + HashUtil.md5("admin") + HashUtil.sha1("admin"))));
+//        assertEquals(lines.get(0),Base64Util.encode(EncodeUtil.string2Hex("01" + HashUtil.md5("123456") + HashUtil.sha1("123456"))));
+//        System.out.println("79"+HashUtil.md5("admin")+ HashUtil.sha1("admin"));
+//        System.out.println(EncodeUtil.hex2Int("78"));
     }
 
 
