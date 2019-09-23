@@ -60,5 +60,25 @@ public class EncodeUtilTest {
     }
 
 
+    @Test
+    public void getJsResult(){
+        System.out.print((char)72);
+        System.out.print((char)97);
+        System.out.print((char)99);
+        System.out.print((char)107);
+        System.out.print((char)69);
+        System.out.print((char)114);
+        System.out.print((char)82);
+        System.out.print((char)75);
+        System.out.print((char)69);
+        System.out.print((char)89);
+    }
+
+    @Test
+    public void get(){
+        System.out.println(EncodeUtil.hex2String(EncodeUtil.int2Hex(-72539512)));
+    }
+
+
 
 }

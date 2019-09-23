@@ -59,6 +59,11 @@ public class RSAImpl {
         return phi;
     }
 
+    public static BigInteger calculateD(BigInteger e, BigInteger phi) {
+        BigInteger d = e.modInverse(phi);
+        return d;
+    }
+
 
     public static void explainRSA(String[] args) {
         BigInteger p = new BigInteger("23");

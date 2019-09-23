@@ -111,4 +111,21 @@ public class HashUtilTest {
     }
 
 
+
+
+    @Test
+    public void guessSaltedSha256() throws Exception {
+        List<String> passwords = FileUtil.readTxtFileIntoStringArrList("pwds.txt");
+        for(String password:passwords){
+
+            String result = HashUtil.sha256("3"+password);
+//            System.out.println(result);
+            if("e3b87e983d54d28f66c94af734967b4b58e7123ce4ed746295a404ee085c43b8".equals(result)){
+                System.out.println(password);
+
+            }
+        }
+    }
+
+
 }
