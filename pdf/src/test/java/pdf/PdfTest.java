@@ -50,14 +50,14 @@ public class PdfTest {
         pdfUtil.generatePdf(bo, "pdfbox.pdf");
     }
 
-    @Test
-    public void testGeneratePdfByAsposeWord() throws Exception {
-        RecordBO bo = pdf.model.m2.DataUtil.prepareData();
-        String recordFtl = getTemplateString();
-//    pdfUtil.writePdfToStream("","Record ID: ${businessId} - Version: ${version}",recordFtl,bo,response.getOutputStream());
-        String htmlData = FreeMarkerUtil.getContent("record1.ftl", bo);
-        AsposeUtil.html2pdf(htmlData);
-    }
+//    @Test
+//    public void testGeneratePdfByAsposeWord() throws Exception {
+//        RecordBO bo = pdf.model.m2.DataUtil.prepareData();
+//        String recordFtl = getTemplateString();
+////    pdfUtil.writePdfToStream("","Record ID: ${businessId} - Version: ${version}",recordFtl,bo,response.getOutputStream());
+//        String htmlData = FreeMarkerUtil.getContent("record1.ftl", bo);
+//        AsposeUtil.html2pdf(htmlData);
+//    }
 
     @Test
     public void testGeneratePdfByAsposePdf() throws Exception {
@@ -69,6 +69,9 @@ public class PdfTest {
         FileOutputStream os = new FileOutputStream(file);
 //    String htmlData = FreeMarkerUtil.getContent("record1.ftl", bo);
         AsposeUtil.html2pdf1("", "Footer", htmlData, os);
+        File file2 = new File("aspose2.pdf");  //新建一个空白pdf文档
+        FileOutputStream os2 = new FileOutputStream(file);
+        AsposeUtil.html2pdf1("", "Footer", htmlData, os2);
     }
 
 

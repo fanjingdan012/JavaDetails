@@ -29,6 +29,26 @@ public class Base64Util {
 
     }
 
+    public static String encodeUrl(String plainText) {
+        try {
+            return  Base64.getUrlEncoder().encodeToString(plainText.getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    public static String encodeMime(String plainText) {
+        StringBuilder stringBuilder = new StringBuilder(plainText);
+        try {
+           byte[] mimeBytes = stringBuilder.toString().getBytes("utf-8");
+           String mimeEncodedString = Base64.getMimeEncoder().encodeToString(mimeBytes);
+           System.out.println("Base64 编码字符串 (MIME) :" + mimeEncodedString);
+           return mimeEncodedString;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

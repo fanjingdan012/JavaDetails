@@ -40,9 +40,9 @@ public class RSAImpl {
     public static BigInteger primeFactorize(BigInteger bigInteger) {
         BigInteger n = new BigInteger(bigInteger.toByteArray());
         BigInteger k;
-        BigInteger sqrtn = n.sqrt();
 
-        for (k = new BigInteger("2"); k.compareTo(sqrtn) <= 0; k = k.add(one)) {
+
+        for (k = new BigInteger("2"); k.compareTo(n) <= 0; k = k.add(one)) {
             if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
                 return k;
 

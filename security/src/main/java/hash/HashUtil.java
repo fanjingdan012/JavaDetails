@@ -31,7 +31,7 @@ public class HashUtil {
         MappedByteBuffer byteBuffer = ch.map(FileChannel.MapMode.READ_ONLY, 0,
                 file.length());
         messagedigest.update(byteBuffer);
-        return EncodeUtil.bufferToHex(messagedigest.digest());
+        return EncodeUtil.bytes2Hex(messagedigest.digest());
     }
 
     public static String md5(String s) {
@@ -45,7 +45,7 @@ public class HashUtil {
             nsaex.printStackTrace();
         }
         messagedigest.update(bytes);
-        return EncodeUtil.bufferToHex(messagedigest.digest());
+        return EncodeUtil.bytes2Hex(messagedigest.digest());
     }
 
 
@@ -85,7 +85,7 @@ public class HashUtil {
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(str.getBytes("UTF-8"));
-            encodestr = EncodeUtil.bufferToHex(messageDigest.digest());
+            encodestr = EncodeUtil.bytes2Hex(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -100,7 +100,7 @@ public class HashUtil {
         try {
             messageDigest = MessageDigest.getInstance("SHA-1");
             messageDigest.update(str.getBytes("UTF-8"));
-            encodestr = EncodeUtil.bufferToHex(messageDigest.digest());
+            encodestr = EncodeUtil.bytes2Hex(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {

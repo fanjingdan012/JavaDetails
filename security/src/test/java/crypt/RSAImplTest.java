@@ -1,7 +1,6 @@
 package crypt;
 
 import encode.EncodeUtil;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -30,14 +29,14 @@ public class RSAImplTest {
     }
 
     @Test
-    public void calculateD(){
+    public void testPrimeFactorize(){
         BigInteger n = new BigInteger("cd626fe3069991d",16);
         BigInteger p = RSAImpl.primeFactorize(n);
         BigInteger q = n.divide(p);
-        BigInteger phi = RSAImpl.calculatePhi(p,q);
-        BigInteger e = new BigInteger("10001",16);
-        BigInteger d = e.modInverse(phi);
-        System.out.println(d.toString(16));
+        System.out.println(p.toString(16));
+        System.out.println(q.toString(16));
+        //39532861
+        //39533a3d
     }
 
     @Test
@@ -65,8 +64,8 @@ public class RSAImplTest {
         rsa.n = n2;
         rsa.e=e;
         assertEquals(C2,rsa.encrypt(plainMsg));
-        System.out.println(EncodeUtil.bufferToHex(plainMsg.toByteArray()));
-        System.out.println(EncodeUtil.hexToString("616162626f747433302c20686f77277320796f7572206461793f20536f756e6473206c696b6520736f6d65626f6479277320676f7420612063617365206f6620746865204d6f6e646179732e"));
+        System.out.println(EncodeUtil.bytes2Hex(plainMsg.toByteArray()));
+        System.out.println(EncodeUtil.hex2String("616162626f747433302c20686f77277320796f7572206461793f20536f756e6473206c696b6520736f6d65626f6479277320676f7420612063617365206f6620746865204d6f6e646179732e"));
     }
 
 

@@ -1,13 +1,18 @@
 package hash.md5;
 
 import crypt.CTFChallenge;
+import encode.Base64Util;
+import encode.EncodeUtil;
+import file.FileUtil;
 import hash.HashUtil;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 //md5 length is 32
 public class HashUtilTest {
@@ -31,7 +36,7 @@ public class HashUtilTest {
     @Test
     public void testMd5() throws Exception {
         String result = HashUtil.md5("123456");
-        Assert.assertEquals("e10adc3949ba59abbe56e057f20f883e", result);
+        assertEquals("e10adc3949ba59abbe56e057f20f883e", result);
     }
 
 
@@ -82,13 +87,26 @@ public class HashUtilTest {
     @Test
     public void testSha256() throws Exception {
         String result = HashUtil.sha256("123456");
-        Assert.assertEquals("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", result);
+        assertEquals("8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", result);
     }
 
     @Test
     public void testSha1() throws Exception {
         String result = HashUtil.sha1("123456");
-        Assert.assertEquals("7c4a8d09ca3762af61e59520943dc26494f8941b", result);
+        assertEquals("7c4a8d09ca3762af61e59520943dc26494f8941b", result);
+    }
+
+    @Test
+    public void guessHashAlgorithm() throws IOException {
+        List<String> lines = FileUtil.readTxtFileIntoStringArrList("base64.txt");
+        for (String line : lines) {
+            String decoded = Base64Util.decode(line);
+            System.out.println(EncodeUtil.hex2String(decoded));
+        }
+
+        System.out.println(Base64Util.encode(EncodeUtil.string2Hex("00" + HashUtil.md5("admin") + HashUtil.sha1("admin"))));
+        assertEquals(lines.get(0),Base64Util.encode(EncodeUtil.string2Hex("01" + HashUtil.md5("123456") + HashUtil.sha1("123456"))));
+        System.out.println("00"+HashUtil.md5("admin")+ HashUtil.sha1("admin"));
     }
 
 

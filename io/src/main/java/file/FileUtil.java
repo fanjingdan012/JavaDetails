@@ -1,5 +1,9 @@
 package file;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -393,6 +397,13 @@ public class FileUtil {
         //                }
         //            }
         //        }
+    }
+
+
+    public static void setClipboardString(String text) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable trans = new StringSelection(text);
+        clipboard.setContents(trans, null);
     }
 
 }
