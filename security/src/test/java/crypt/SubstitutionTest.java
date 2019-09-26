@@ -18,6 +18,18 @@ public class SubstitutionTest {
     }
 
     @Test
+    public void testC(){
+        String s = ".rfyr rerujrzbf yhsrfh ro gutvz gV .fv ryvs erugb fvug gnuj jbax gba bq V erirjbU\n";
+        String s1 = "gbYNgV4qrxebJhbLrcbUV :fv tnys ynavs ehbL !abvgnyhgnetabP";
+
+        for (int i = 0; i < 26; i++) {
+            String cesar = Substitution.cesar(i, "RZQNRE");
+
+            System.out.println(new StringBuffer(cesar).reverse().toString());
+        }
+    }
+
+    @Test
     public void testSubstituteWithMap(){
         String key = "DACyLQ8DppU";
         String em = "GZVURTKQBKUNKTIKEVQZNZOBKYUNMIJMTD MOKEMZUTAFZNOEFHMWVJFQBWQZNNYEEM KTWJVBMDPLOWPLRBKYLNNEVLZTFQEFQKTK KPEWWHDJTPNDCIAJK\n" +

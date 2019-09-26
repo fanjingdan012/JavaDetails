@@ -7,9 +7,17 @@ public class Substitution {
     public static String cesar(int offsset, String s) {
         char[] cs = s.toCharArray();
         for (int j = 0; j < cs.length; j++) {
-            cs[j] += offsset;
-            if (cs[j] > 'Z') {
-                cs[j] -= 26;
+            if('a'<=cs[j]&&cs[j]<='z'){
+                cs[j] += offsset;
+                if (cs[j] > 'z') {
+                    cs[j] -= 26;
+                }
+            }
+            else if('A'<=cs[j]&&cs[j]<='Z'){
+                cs[j] += offsset;
+                if (cs[j] > 'Z') {
+                    cs[j] -= 26;
+                }
             }
         }
         return new String(cs);
