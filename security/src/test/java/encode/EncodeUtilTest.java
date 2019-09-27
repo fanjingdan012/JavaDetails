@@ -1,7 +1,9 @@
 package encode;
 
+import file.FileUtil;
 import org.junit.Test;
 
+import java.io.File;
 import java.math.BigInteger;
 
 import static org.junit.Assert.assertEquals;
@@ -57,6 +59,11 @@ public class EncodeUtilTest {
     public void solveBufferOverflow() {
         //"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1234567890qwertyuiopasdfghjklzxcvbn9^E"
         System.out.println(EncodeUtil.int2Hex(1337));
+        System.out.println(EncodeUtil.int2Hex(2500));
+        System.out.println(EncodeUtil.int2Hex(1666));
+        System.out.println(EncodeUtil.int2Hex(2600));
+        System.out.println(EncodeUtil.int2Hex(1766));
+        System.out.println(EncodeUtil.hex2String("478B93A2CB4E4E8C482C780C9C07C0FD").toLowerCase());
         System.out.println(EncodeUtil.hex2String("a66b6ea8"));
         System.out.println(EncodeUtil.hex2String(EncodeUtil.int2Hex(1337)));
     }
@@ -79,27 +86,39 @@ public class EncodeUtilTest {
 
 
     @Test
-    public void get() {
+
+    public void getFirstBlockChainNonce(){
 //        System.out.println(EncodeUtil.hex2String(EncodeUtil.int2Hex(-72539512)));
-        BigInteger b = new BigInteger("1209143407476550975641959824312993703149920344437422193042293131572745298662696284279928622412441255652391493241414170537319784298367821654726781089600780498369402167443363862621886943970468819656731959468058528787895569936536904387979815183897568006750131879851263753496120098205966442010445601534305483783759226510120860633770814540166419495817666312474484061885435295870436055727722073738662516644186716532891328742452198364825809508602208516407566578212780807");
-        System.out.println(EncodeUtil.hex2String(b.toString(16)));
+        BigInteger b = new BigInteger("709e3e28",16);
+        System.out.println(b);
     }
 
     @Test
+    public void getSum(){
+        int sum = 0;
+        for(int x = 3;x<1000;x++){
+            for(int z = 3;z<1000;z++){
+                sum+=(f(x,z));
+            }
+        }
+        System.out.println(sum);
+    }
+
+
+    @Test
     public void read(){
-//        -1619509231,-1621743088,-72539512,-1619509230,0,-2124127640
-//%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d
-//        1378328608,1376094736,-72539512,1378328609,0,-1628720152,194,1734437990,-1644138907,9,1372807789
-//        -2017230783,-2019464688,-72539512,-2017230782,623666213,2144602136,194,1734437990,2130734693,9,-2022751635,118,0,0,15775231,623666213,744760620,1680157796,623666213,744760620,1680157796,623666213
-                int i=1734437990;
-                i=-1644138907;
-                i=9;
-                i=744760620;
-        System.out.println(EncodeUtil.hex2String(EncodeUtil.int2Hex(i)));
-        System.out.println(EncodeUtil.int2Hex(i));
-        System.out.println(EncodeUtil.string2Hex("flagIsSeen"));
-//        System.out.println(EncodeUtil.hex2Int(EncodeUtil.string2Hex("flagIsSeen")));
-//%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d
+        System.out.println(EncodeUtil.hex2String("00007fffdbf6bfc8"));
+        System.out.println(EncodeUtil.hex2String("0000000100040000"));
+        System.out.println(EncodeUtil.hex2String("414c465f4654437b"));
+        System.out.println(EncodeUtil.hex2String("7d335f4e57505f47"));
+        System.out.println(EncodeUtil.hex2String("0000002000000000"));
+        System.out.println(EncodeUtil.hex2String("0000000000000001"));
+        System.out.println(EncodeUtil.hex2String("0000000000000001"));
+        System.out.println(EncodeUtil.hex2String("00007ffcfdfd3da8"));
+        System.out.println(EncodeUtil.hex2String("00007ffcfdfd3db8"));
+        System.out.println(EncodeUtil.hex2String("0000000000000002"));
+        System.out.println(EncodeUtil.hex2String("7025702570257025"));
+        System.out.println(EncodeUtil.hex2String("7025702570257025"));
     }
 
     @Test
@@ -145,5 +164,14 @@ public class EncodeUtilTest {
         return f(f(x + 3, z), z);
     }
 
+
+    @Test
+    public void readBytes() {
+        byte[] bytes = FileUtil.readFileByBytes("100_Euro_Bacon_For_CTF.jpg");
+        String hex = EncodeUtil.bytes2Hex(bytes);
+        System.out.println(hex);
+//        FileUtil.writeFileByBytes(bytes);
+
+    }
 
 }

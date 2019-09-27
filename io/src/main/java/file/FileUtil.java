@@ -132,8 +132,8 @@ public class FileUtil {
         }
     }
 
-    public static void writeFileByBytes() {
-        File file2 = new File("C:\\fjd\\bb.txt");
+    public static void writeFileByBytes(byte[] bytes, String fileName) {
+        File file2 = new File(fileName);
         if (!file2.exists()) {
             try {
                 file2.createNewFile();
@@ -142,16 +142,9 @@ public class FileUtil {
             }
         }
         FileOutputStream fos = null;
-        byte[] bbytes = new byte[4];
-        InputStream in = null;
         try {
-            System.out.println("以字节为单位读取文件内容，一次读一个字节：");
-            bbytes[0] = (byte) 251;
-            bbytes[1] = (byte) 251;
-            bbytes[2] = (byte) 251;
-            bbytes[3] = (byte) 251;
             fos = new FileOutputStream(file2);
-            fos.write(bbytes);
+            fos.write(bytes);
             fos.close();
         } catch (Exception e) {
 
@@ -281,13 +274,8 @@ public class FileUtil {
             int tempbyte;
             int i = 0;
             while ((tempbyte = in.read()) != -1) {
-
-
-                System.out.print(tempbyte + " ");
                 bytes[i] = (byte) tempbyte;
                 i++;
-
-
             }
 
 

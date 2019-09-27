@@ -54,6 +54,23 @@ public class RSAImpl {
 
     }
 
+    public static BigInteger primeFactorizeFromMiddle(BigInteger bigInteger) {
+        BigInteger n = new BigInteger(bigInteger.toByteArray());
+        BigInteger k;
+
+        BigInteger from = bigInteger.sqrt();
+        for (k = from; k.compareTo(n) <= 0; k = k.add(one)) {
+            if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
+                return k;
+
+            }
+
+        }
+        return null;
+
+
+    }
+
     public static BigInteger calculatePhi(BigInteger p, BigInteger q) {
         BigInteger phi = p.subtract(one).multiply(q.subtract(one));
         return phi;

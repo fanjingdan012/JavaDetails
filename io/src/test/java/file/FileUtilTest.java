@@ -25,10 +25,7 @@ public class FileUtilTest {
         FileUtil.readFileByRandomAccess("fileName");
     }
 
-    @Test
-    public void testWriteFileByBytes() throws Exception {
-        FileUtil.writeFileByBytes();
-    }
+
 
 
     @Test
@@ -99,5 +96,3 @@ public class FileUtilTest {
 
 
 }
-
-//Generated with love by TestMe :) Please report issues and submit feature requests at: http://weirddev.com/forum#!/testme

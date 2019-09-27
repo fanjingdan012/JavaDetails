@@ -104,7 +104,8 @@ public class HashUtilTest {
             System.out.println(EncodeUtil.hex2String(decoded));
         }
 
-        System.out.println(Base64Util.encode(EncodeUtil.string2Hex("79" + HashUtil.md5("admin") + HashUtil.sha1("admin"))));
+        System.out.println(Base64Util.encode(EncodeUtil.string2Hex("0x0" + HashUtil.md5("admin") + HashUtil.sha1("admin"))));
+        System.out.println(HashUtil.sha1("root"));
 //        assertEquals(lines.get(0),Base64Util.encode(EncodeUtil.string2Hex("01" + HashUtil.md5("123456") + HashUtil.sha1("123456"))));
 //        System.out.println("79"+HashUtil.md5("admin")+ HashUtil.sha1("admin"));
 //        System.out.println(EncodeUtil.hex2Int("78"));
@@ -117,12 +118,13 @@ public class HashUtilTest {
     public void guessSaltedSha256() throws Exception {
         List<String> passwords = FileUtil.readTxtFileIntoStringArrList("pwds.txt");
         for(String password:passwords){
-
-            String result = HashUtil.sha256("3"+password);
+            for(String salt:passwords) {
+                String result = HashUtil.sha256(salt + password);
 //            System.out.println(result);
-            if("e3b87e983d54d28f66c94af734967b4b58e7123ce4ed746295a404ee085c43b8".equals(result)){
-                System.out.println(password);
+                if ("e3b87e983d54d28f66c94af734967b4b58e7123ce4ed746295a404ee085c43b8".equals(result)) {
+                    System.out.println(salt+password);
 
+                }
             }
         }
     }

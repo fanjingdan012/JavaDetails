@@ -70,4 +70,9 @@ public class SubstitutionTest {
         assertEquals("",Substitution.substituteWithMap(em,m2));
     }
 
+    @Test
+    public void testDecodeBacon(){
+        assertEquals("ctflou/vebakedbacon",Substitution.decodeBacon("aaababaabaaababababaabbabbaabbaabaaaaaabaaaaaabaabaabaaaaabbaaaabaaaaaaaabaabbababbaa"));
+    }
+
 }
