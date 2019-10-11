@@ -77,7 +77,7 @@ public class HttpUtilTest {
 //        board = getBlock(2, 0, board);
 //        board = getBlock(2, 1, board);
 //        board = getBlock(2, 2, board);
-        Solution s = new Solution();
+        Sudoku s = new Sudoku();
         System.out.println("solveStart" + System.currentTimeMillis());
 //        s.getAllSudokuSolutions(board);
         s.solveSudoku(board);
@@ -232,12 +232,6 @@ public class HttpUtilTest {
             return block;
         }
 
-    }
-
-    @Test
-    public void solveBabyCapcha(){
-        sudokuId = httpUtil.sendRequest("babycaptcha.xsec.sap.corp:13337", "Get", new HashMap<>(), new HashMap<>(), HttpUtil.PARAMETER_TYPE_URLENCODED);
-        System.out.println(sudokuId);
     }
 
 }

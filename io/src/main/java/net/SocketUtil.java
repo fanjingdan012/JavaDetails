@@ -60,9 +60,5 @@ public class SocketUtil {
 
     }
 
-    public static void main1(String[] args) {
-        int a = calcResult("111*860=");
-        a = calcResult("111+860=");
-        System.out.println(a);
-    }
+
 }

@@ -72,7 +72,7 @@ public class HttpUtil {
      * @param parameterType
      * @return
      */
-    public CloseableHttpResponse sendRequestForEntireResponse(CloseableHttpClient httpClient, String url, String method,
+    private CloseableHttpResponse sendRequestForEntireResponse(CloseableHttpClient httpClient, String url, String method,
                                                               Map<String, String> header, Map<String, Object> parameterMp, String parameterType) {
         HttpRequestBase httpRequest = getHttpRequest(url, method, setUpHeader(header, parameterType),
                 setUpEntity(parameterMp, parameterType));
