@@ -12,7 +12,7 @@ public class HttpUtilTest {
     private static final ExecutorService threadpool = Executors.newFixedThreadPool(18);
 
     @Test
-    public void testCreateProblem() throws ExecutionException, InterruptedException {
+    public void solveSvetoku() throws ExecutionException, InterruptedException {
         sudokuId = httpUtil.sendRequest("http://svetoku.xsec.sap.corp:8888/api/svetoku/puzzles/", "Post", new HashMap<>(), new HashMap<>(), HttpUtil.PARAMETER_TYPE_URLENCODED);
         sudokuId = sudokuId.substring(1, sudokuId.length() - 1);
         char[][] board = new char[9][9];
@@ -232,6 +232,12 @@ public class HttpUtilTest {
             return block;
         }
 
+    }
+
+    @Test
+    public void solveBabyCapcha(){
+        sudokuId = httpUtil.sendRequest("babycaptcha.xsec.sap.corp:13337", "Get", new HashMap<>(), new HashMap<>(), HttpUtil.PARAMETER_TYPE_URLENCODED);
+        System.out.println(sudokuId);
     }
 
 }

@@ -8,9 +8,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 以字符为单位读取文件，常用于读文本，数字等类型的文件
- */
 public class FileUtil {
     public static void readFileByChars(String fileName) {
         File file = new File(fileName);
