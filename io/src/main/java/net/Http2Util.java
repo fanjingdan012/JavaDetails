@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class Http2Util {
-    private static HttpClient client = HttpClient.newHttpClient();
-    public static String sendRequest(String url, String method, Map<String, String> header, String body)  {
+    private HttpClient client = HttpClient.newHttpClient();
+    public String sendRequest(String url, String method, Map<String, String> header, String body)  {
         HttpResponse.BodyHandler<String> stringBodyHandler = HttpResponse.BodyHandlers.ofString();
 
 
@@ -35,7 +35,7 @@ public class Http2Util {
 
     }
 
-    public static CompletableFuture<HttpResponse<String>> sendRequestAsync(String url, String method, Map<String, String> header, String body)  {
+    public CompletableFuture<HttpResponse<String>> sendRequestAsync(String url, String method, Map<String, String> header, String body)  {
         HttpResponse.BodyHandler<String> stringBodyHandler = HttpResponse.BodyHandlers.ofString();
         HttpClient client = HttpClient.newHttpClient();
 
@@ -51,7 +51,7 @@ public class Http2Util {
     }
 
 
-    private static HttpRequest getHttpRequest(String url, String method, String body) throws URISyntaxException {
+    private HttpRequest getHttpRequest(String url, String method, String body) throws URISyntaxException {
         HttpRequest request = null;
         switch(method){
             case "Post":

@@ -15,11 +15,11 @@ public class Http2UtilTest {
     public void solveSvetoku() throws ExecutionException, InterruptedException {
         HttpResponse.BodyHandler<String> stringBodyHandler = HttpResponse.BodyHandlers.ofString();
         boolean printlog = true;
-
+        Http2Util http2Util = new Http2Util();
 
         boolean cont = true;
         while (cont) {
-            String temp = Http2Util.sendRequest("http://10.55.129.204:8888/api/svetoku/puzzles","Post",new HashMap<>(),"");
+            String temp = http2Util.sendRequest("http://10.55.129.204:8888/api/svetoku/puzzles","Post",new HashMap<>(),"");
 
             final String puzzle = temp.substring(1, temp.length() - 1);
             System.out.println(puzzle);
@@ -28,7 +28,7 @@ public class Http2UtilTest {
             final String[][][][] blocks = new String[3][3][3][3];
             CompletableFuture<HttpResponse<String>> responses[] = new CompletableFuture[9];
             for (int i = 0; i < 9; i++) {
-                responses[i] =Http2Util.sendRequestAsync("http://10.55.129.204:8888/api/svetoku/puzzles/" + puzzle + "/blocks/" + (i / 3) + "/" + (i % 3),"Get",new HashMap<>(),"");
+                responses[i] =http2Util.sendRequestAsync("http://10.55.129.204:8888/api/svetoku/puzzles/" + puzzle + "/blocks/" + (i / 3) + "/" + (i % 3),"Get",new HashMap<>(),"");
             }
 
             boolean[] finished = new boolean[9];
