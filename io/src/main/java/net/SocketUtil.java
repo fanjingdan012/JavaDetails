@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.spec.EncodedKeySpec;
+import java.util.Scanner;
 
 public class SocketUtil {
     public static void main(String[] args) throws IOException{
@@ -12,7 +14,7 @@ public class SocketUtil {
         PrintWriter out = null;
         BufferedReader in = null;
         try {
-            pingSocket = new Socket("babycaptcha.xsec.sap.corp", 13337);
+            pingSocket = new Socket("10.55.128.202", 13337);
             out = new PrintWriter(pingSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(pingSocket.getInputStream()));
         } catch (IOException e) {
@@ -20,15 +22,24 @@ public class SocketUtil {
         }
 
         System.out.println(in.readLine());
+
 //        out.println("hi");
         while(true){
+//            System.out.println(in.readLine());
+
             char[] buffer = new char[100];
             in.read(buffer);
             String s = new String(buffer);
             System.out.println(s);
-            int a = calcResult(s);
-            System.out.println(a);
-            out.println(a);
+            Scanner scan = new Scanner(System.in);
+            if (scan.hasNext()) {
+                String str1 = scan.next();
+                System.out.println("input:" + str1);
+                out.println(str1);
+            }
+//            int a = calcResult(s);
+//            System.out.println(a);
+//            out.println(a);
         }
 //        out.close();
 //        in.close();

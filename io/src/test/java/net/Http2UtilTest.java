@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -59,6 +60,7 @@ public class Http2UtilTest {
                 for (int j = 0; j < 3; j++) {
                     for (int k = 0; k < 3; k++) {
                         for (int l = 0; l < 3; l++) {
+TreeMap t;
                             blocks[i][j][k][l] = result[i][j][k][l];
                         }
                     }

@@ -82,7 +82,7 @@ public class RSAImpl {
     }
 
 
-    public static void explainRSA(String[] args) {
+    public static void explainRSA() {
         BigInteger p = new BigInteger("23");
         System.out.println("p=23");
         BigInteger q = new BigInteger("19");
@@ -107,4 +107,5 @@ public class RSAImpl {
 
 
     }
+
 }

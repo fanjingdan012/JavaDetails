@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -46,7 +47,7 @@ public class AsposeUtil {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(htmlData.getBytes(StandardCharsets.UTF_8));
         System.out.println("get byte input stream of html end:"+new Date(System.currentTimeMillis()));
-
+        Arrays.asList()
         com.aspose.pdf.Document pdfDocument = new com.aspose.pdf.Document(bis, options);
         System.out.println("write stream to pdfDocument end:"+new Date(System.currentTimeMillis()));
 

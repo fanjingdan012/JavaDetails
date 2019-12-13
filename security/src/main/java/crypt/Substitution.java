@@ -40,6 +40,7 @@ public class Substitution {
     }
 
     public static String decodeBacon(String bacon){
+
         bacon = bacon.toUpperCase();
         Map<String, String> map = new HashMap<>();
         map.put("AAAAA","a");

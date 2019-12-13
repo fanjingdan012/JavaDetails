@@ -14,7 +14,10 @@ import static org.junit.Assert.assertEquals;
 
 public class RSAImplTest {
 
-
+    @Test
+    public void explain(){
+        RSAImpl.explainRSA();
+    }
     @Test
     public void testEncrypt() throws Exception {
 

@@ -1,5 +1,6 @@
 package core;
 
+import java.util.HashMap;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -54,6 +55,8 @@ public class PrintABC10 {
                 } finally {
                     lock.unlock();
                 }
+                HashMap<Integer,Integer> map= new HashMap<>();
+                map.remove(1);
             }
 
         }).start();

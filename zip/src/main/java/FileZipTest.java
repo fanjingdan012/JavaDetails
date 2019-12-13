@@ -75,7 +75,7 @@ public class FileZipTest {
   public static void main(String[] args) {
     String sourceFilePath = "C:\\zip";
     String zipFilePath = "C:\\zip";
-    String fileName = "12700153file";
+    String fileName = "12700143file";
     FileZipTest fileToZip = new FileZipTest();
     boolean flag = fileToZip(sourceFilePath, zipFilePath, fileName);
     if (flag) {
