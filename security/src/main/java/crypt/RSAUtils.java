@@ -37,16 +37,16 @@ import javax.crypto.Cipher;
  * @version 1.0 
  */  
 public class RSAUtils {  
-  
-    /** *//** 
-     * 加密算法RSA 
-     */  
-    public static final String KEY_ALGORITHM = "RSA";  
+
+    /** *//**
+     * 加密算法RSA
+     */
+    public static final String KEY_ALGORITHM = "RSA";
       
-    /** *//** 
-     * 签名算法 
-     */  
-    public static final String SIGNATURE_ALGORITHM = "MD5withRSA";  
+    /** *//**
+     * 签名算法
+     */
+    public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
   
     /** *//** 
      * 获取公钥的key 
@@ -77,7 +77,7 @@ public class RSAUtils {
      * @throws Exception 
      */  
     public static Map<String, Object> genKeyPair() throws Exception {  
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);  
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
         keyPairGen.initialize(1024);  
         KeyPair keyPair = keyPairGen.generateKeyPair();  
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();  
@@ -102,7 +102,7 @@ public class RSAUtils {
     public static String sign(byte[] data, String privateKey) throws Exception {  
         byte[] keyBytes = Base64Util.decode(privateKey).getBytes();
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);  
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);  
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);  
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);  
         signature.initSign(privateK);  
@@ -127,7 +127,7 @@ public class RSAUtils {
             throws Exception {  
         byte[] keyBytes = Base64Util.decode(publicKey).getBytes();
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);  
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);  
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PublicKey publicK = keyFactory.generatePublic(keySpec);  
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM);  
         signature.initVerify(publicK);  

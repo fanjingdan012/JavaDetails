@@ -71,6 +71,16 @@ public class RSAImpl {
 
     }
 
+    public BigInteger eulideanGcd(BigInteger m, BigInteger n)
+    {
+        if (m.mod(n).compareTo(BigInteger.ZERO)==0) {
+            return n;
+        }
+        else {
+            return eulideanGcd(n,m.mod(n));
+        }
+    }
+
     public static BigInteger calculatePhi(BigInteger p, BigInteger q) {
         BigInteger phi = p.subtract(one).multiply(q.subtract(one));
         return phi;

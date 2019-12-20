@@ -1,4 +1,6 @@
-public class Count {  
+package core;
+
+public class Count {
     private int num;  
     public void increment() {  
         num++;  

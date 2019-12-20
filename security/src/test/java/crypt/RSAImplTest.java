@@ -24,6 +24,12 @@ public class RSAImplTest {
     }
 
     @Test
+    public void testEuclideanGcd(){
+        RSAImpl rsa = new RSAImpl();
+        assertEquals(new BigInteger("5"),rsa.eulideanGcd(new BigInteger("15"),new BigInteger("20")));
+    }
+
+    @Test
     public void testDecrypt() throws Exception {
         RSAImpl rsa = new RSAImpl();
         rsa.n = new BigInteger("a245934bdc547847f8c7eb0d7626dedb6ee2ee8e6e90bcc743e77d13972ea6155517aee49cade3e2200d10ba534151e954f6434ddfe8b1fde3d25c8a8fbccfd7c6f7ac3529d6f0a46e2670c2736121bbe096bdc8ceaf33b594c88f8948bae692ad07b1c46e9ad3a0dee68b265ce4cad123315b61ffe68dc9c20fc08903b0a2c5", 16);
