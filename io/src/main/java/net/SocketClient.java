@@ -8,15 +8,15 @@ import java.net.Socket;
 import java.security.spec.EncodedKeySpec;
 import java.util.Scanner;
 
-public class SocketUtil {
+public class SocketClient {
     public static void main(String[] args) throws IOException{
-        Socket pingSocket = null;
+        Socket socket = null;
         PrintWriter out = null;
         BufferedReader in = null;
         try {
-            pingSocket = new Socket("10.55.128.202", 13337);
-            out = new PrintWriter(pingSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(pingSocket.getInputStream()));
+            socket = new Socket("10.55.128.202", 13337);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             return;
         }

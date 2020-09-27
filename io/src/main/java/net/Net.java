@@ -1,5 +1,6 @@
+package net;
 
-import java.io.*; 
+import java.io.*;
 
 
 import java.net.*; 
@@ -28,7 +29,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 
 public class Net { 
-	public static void main(String args[]) throws Exception {		
+	public static void main(String args[]) throws Exception {
 
 		URL tirc = new URL("https://bbs.fudan.edu.cn/bbs/top10"); 
 

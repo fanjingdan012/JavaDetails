@@ -24,7 +24,10 @@ public class EncodeUtilTest {
     @Test
     public void testHexToString() {
         assertEquals("ge", EncodeUtil.hex2String("6765"));
+        assertEquals("msTrKY", EncodeUtil.hex2String("6d7354724b59"));
     }
+
+
 
     @Test
     public void solveXor() {
