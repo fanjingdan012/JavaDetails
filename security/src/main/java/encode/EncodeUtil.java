@@ -1,5 +1,7 @@
 package encode;
 
+import java.math.BigInteger;
+
 public class EncodeUtil {
     private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6',
             '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -49,6 +51,16 @@ public class EncodeUtil {
             hex.append(Integer.toHexString((int) chars[i]));
         }
         return hex.toString();
+    }
+
+    public static String binary2Hex(String binaryStr)
+    {
+        return new BigInteger(binaryStr, 2).toString(16);
+    }
+    public static String hex2Binary(String hexStr)
+    {
+        return new BigInteger(hexStr, 16).toString(2);
+
     }
 
     public static  String hex2String(String hex) {

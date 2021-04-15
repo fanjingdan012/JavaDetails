@@ -125,6 +125,17 @@ public class EncodeUtilTest {
     }
 
     @Test
+    public void getCharFromBinary(){
+//        4D79207011011001010110001101110010011001010111010000100000011010010111
+        String hex=EncodeUtil.binary2Hex("0100110101111001001000000111001101100101011000110111001001100101011101000010000001101001011100110010000000111010001000000100001101101111010000110110111101001110011101010011011100110001");
+        String hex2=EncodeUtil.binary2Hex("00110010000000111010001000000100001101101111010000110110111101001110011101010011011100110001");
+        System.out.println(EncodeUtil.hex2String("4d7920736563726574206973203a2050346e43614b33"));
+        System.out.println(EncodeUtil.hex2String(hex));
+        System.out.println(EncodeUtil.hex2String(hex2));
+
+    }
+
+    @Test
     public void getF() {
         BigInteger sum = BigInteger.ZERO;
         for(int x = 3;x<30000;x++){
