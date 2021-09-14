@@ -28,7 +28,7 @@ public class RSAImpl {
         this.d = this.e.modInverse(phi);
     }
 
-    public RSAImpl(BigInteger p, BigInteger q,  BigInteger e) {
+    public RSAImpl(BigInteger p, BigInteger q, BigInteger e) {
         this.p = p;
         this.q = q;
         this.phi = calculatePhi(p, q);
@@ -67,14 +67,14 @@ public class RSAImpl {
         BigInteger n = new BigInteger(bigInteger.toByteArray());
         BigInteger k;
 
-//        BigInteger from = bigInteger.sqrt();
-//        for (k = from; k.compareTo(n) <= 0; k = k.add(one)) {
-//            if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
-//                return k;
-//
-//            }
-//
-//        }
+        BigInteger from = bigInteger.sqrt();
+        for (k = from; k.compareTo(n) <= 0; k = k.add(one)) {
+            if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
+                return k;
+
+            }
+
+        }
         return null;
 
 

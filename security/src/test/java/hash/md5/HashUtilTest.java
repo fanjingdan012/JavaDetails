@@ -21,8 +21,8 @@ public class HashUtilTest {
     public void testmd5File() throws Exception {
         System.out.println(HashUtil.md5File(new File("./cron.txt")));
     }
-
-    public static void main1(String[] args) throws IOException {
+@Test
+    public void main1() {
         char s = 3;
         String password = "20140401" + s + "3\n" +
                 "3109EEH8DE1697B4B0CA9FFB4CABD7984BA" + s + "0003" + s + "1" + s + "310105196702210000" + s + "???" + s + "20140401\n" +
