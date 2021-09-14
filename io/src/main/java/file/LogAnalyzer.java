@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Main{
+public class LogAnalyzer {
 	public static final String DATE="0606";
 
 	private static void findErrorsInFile(File theFile,PrintWriter writer){

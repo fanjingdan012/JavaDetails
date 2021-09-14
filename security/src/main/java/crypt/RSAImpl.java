@@ -28,6 +28,15 @@ public class RSAImpl {
         this.d = this.e.modInverse(phi);
     }
 
+    public RSAImpl(BigInteger p, BigInteger q,  BigInteger e) {
+        this.p = p;
+        this.q = q;
+        this.phi = calculatePhi(p, q);
+        this.n = p.multiply(q);
+        this.e = e;
+        this.d = this.e.modInverse(phi);
+    }
+
     public BigInteger encrypt(BigInteger message) {
         return message.modPow(this.e, this.n);
     }
@@ -58,26 +67,24 @@ public class RSAImpl {
         BigInteger n = new BigInteger(bigInteger.toByteArray());
         BigInteger k;
 
-        BigInteger from = bigInteger.sqrt();
-        for (k = from; k.compareTo(n) <= 0; k = k.add(one)) {
-            if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
-                return k;
-
-            }
-
-        }
+//        BigInteger from = bigInteger.sqrt();
+//        for (k = from; k.compareTo(n) <= 0; k = k.add(one)) {
+//            if (n.mod(k).compareTo(new BigInteger("0")) == 0) {
+//                return k;
+//
+//            }
+//
+//        }
         return null;
 
 
     }
 
-    public BigInteger eulideanGcd(BigInteger m, BigInteger n)
-    {
-        if (m.mod(n).compareTo(BigInteger.ZERO)==0) {
+    public BigInteger eulideanGcd(BigInteger m, BigInteger n) {
+        if (m.mod(n).compareTo(BigInteger.ZERO) == 0) {
             return n;
-        }
-        else {
-            return eulideanGcd(n,m.mod(n));
+        } else {
+            return eulideanGcd(n, m.mod(n));
         }
     }
 
@@ -90,7 +97,6 @@ public class RSAImpl {
         BigInteger d = e.modInverse(phi);
         return d;
     }
-
 
     public static void explainRSA() {
         BigInteger p = new BigInteger("23");
@@ -114,8 +120,13 @@ public class RSAImpl {
         BigInteger plainMsg2 = encryptedMsg.modPow(d, n);
         System.out.println("plainMsg2=encryptedMsg.modePow(d,n)=encryptedMsg^d mod n=(289^233)%437=100");
         System.out.println("decrypt " + encryptedMsg + ":" + plainMsg2);
-
-
     }
 
+    public static BigInteger hcf(BigInteger a, BigInteger b) {
+        if (b.equals(BigInteger.ZERO)) {
+            return a;
+        } else {
+            return hcf(b, a.mod(b));
+        }
+    }
 }

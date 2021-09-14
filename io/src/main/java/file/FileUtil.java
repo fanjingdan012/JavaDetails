@@ -67,9 +67,10 @@ public class FileUtil {
     /**
      * 以行为单位读取文件，常用于读面向行的格式化文件
      */
-    public static void readFileByLines(String fileName) {
+    public static List<String> readFileByLines(String fileName) {
         File file = new File(fileName);
         BufferedReader reader = null;
+        List<String> result = new ArrayList<>();
         try {
             System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = new BufferedReader(new FileReader(file));
@@ -80,6 +81,7 @@ public class FileUtil {
                 // 显示行号
                 System.out.println("line " + line + ": " + tempString);
                 line++;
+                result.add(tempString);
             }
             reader.close();
         } catch (IOException e) {
@@ -92,12 +94,9 @@ public class FileUtil {
                 }
             }
         }
+        return result;
     }
-//
 
-    /**
-     * 随机读取文件内容
-     */
     public static void readFileByRandomAccess(String fileName) {
         RandomAccessFile randomFile = null;
         try {

@@ -1,9 +1,11 @@
 package net;
 
+import file.FileUtil;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.*;
 
 public class HttpUtilTest {
@@ -22,15 +24,15 @@ public class HttpUtilTest {
             }
         }
         System.out.println("1:" + System.currentTimeMillis());
-        SudokuGetter getter00 = new SudokuGetter(sudokuId,0, 0, board);
-        SudokuGetter getter01 = new SudokuGetter(sudokuId,0, 1, board);
-        SudokuGetter getter02 = new SudokuGetter(sudokuId,0, 2, board);
-        SudokuGetter getter10 = new SudokuGetter(sudokuId,1, 0, board);
-        SudokuGetter getter11 = new SudokuGetter(sudokuId,1, 1, board);
-        SudokuGetter getter12 = new SudokuGetter(sudokuId,1, 2, board);
-        SudokuGetter getter20 = new SudokuGetter(sudokuId,2, 0, board);
-        SudokuGetter getter21 = new SudokuGetter(sudokuId,2, 1, board);
-        SudokuGetter getter22 = new SudokuGetter(sudokuId,2, 2, board);
+        SudokuGetter getter00 = new SudokuGetter(sudokuId, 0, 0, board);
+        SudokuGetter getter01 = new SudokuGetter(sudokuId, 0, 1, board);
+        SudokuGetter getter02 = new SudokuGetter(sudokuId, 0, 2, board);
+        SudokuGetter getter10 = new SudokuGetter(sudokuId, 1, 0, board);
+        SudokuGetter getter11 = new SudokuGetter(sudokuId, 1, 1, board);
+        SudokuGetter getter12 = new SudokuGetter(sudokuId, 1, 2, board);
+        SudokuGetter getter20 = new SudokuGetter(sudokuId, 2, 0, board);
+        SudokuGetter getter21 = new SudokuGetter(sudokuId, 2, 1, board);
+        SudokuGetter getter22 = new SudokuGetter(sudokuId, 2, 2, board);
         Future<String> future00 = threadpool.submit(getter00);
         Future<String> future01 = threadpool.submit(getter01);
         Future<String> future02 = threadpool.submit(getter02);
@@ -58,15 +60,15 @@ public class HttpUtilTest {
         String block20 = future20.get();
         String block21 = future21.get();
         String block22 = future22.get();
-        board = genBoard(0,0,block00,board);
-        board = genBoard(0,1,block01,board);
-        board = genBoard(0,2,block02,board);
-        board = genBoard(1,0,block10,board);
-        board = genBoard(1,1,block11,board);
-        board = genBoard(1,2,block12,board);
-        board = genBoard(2,0,block20,board);
-        board = genBoard(2,1,block21,board);
-        board = genBoard(2,2,block22,board);
+        board = genBoard(0, 0, block00, board);
+        board = genBoard(0, 1, block01, board);
+        board = genBoard(0, 2, block02, board);
+        board = genBoard(1, 0, block10, board);
+        board = genBoard(1, 1, block11, board);
+        board = genBoard(1, 2, block12, board);
+        board = genBoard(2, 0, block20, board);
+        board = genBoard(2, 1, block21, board);
+        board = genBoard(2, 2, block22, board);
 
 //        board = getBlock(0, 0, board);
 //        board = getBlock(0, 1, board);
@@ -82,24 +84,24 @@ public class HttpUtilTest {
 //        s.getAllSudokuSolutions(board);
         s.solveSudoku(board);
         System.out.println("solveEnd" + System.currentTimeMillis());
-        String result00 = getBlockResult(0,0,board);
-        String result01 = getBlockResult(0,1,board);
-        String result02 = getBlockResult(0,2,board);
-        String result10 = getBlockResult(1,0,board);
-        String result11 = getBlockResult(1,1,board);
-        String result12 = getBlockResult(1,2,board);
-        String result20 = getBlockResult(2,0,board);
-        String result21 = getBlockResult(2,1,board);
-        String result22 = getBlockResult(2,2,board);
-        SudokuPutter putter00 = new SudokuPutter(sudokuId,0, 0, result00);
-        SudokuPutter putter01 = new SudokuPutter(sudokuId,0, 1, result01);
-        SudokuPutter putter02 = new SudokuPutter(sudokuId,0, 2, result02);
-        SudokuPutter putter10 = new SudokuPutter(sudokuId,1, 0, result10);
-        SudokuPutter putter11 = new SudokuPutter(sudokuId,1, 1, result11);
-        SudokuPutter putter12 = new SudokuPutter(sudokuId,1, 2, result12);
-        SudokuPutter putter20 = new SudokuPutter(sudokuId,2, 0, result20);
-        SudokuPutter putter21 = new SudokuPutter(sudokuId,2, 1, result21);
-        SudokuPutter putter22 = new SudokuPutter(sudokuId,2, 2, result22);
+        String result00 = getBlockResult(0, 0, board);
+        String result01 = getBlockResult(0, 1, board);
+        String result02 = getBlockResult(0, 2, board);
+        String result10 = getBlockResult(1, 0, board);
+        String result11 = getBlockResult(1, 1, board);
+        String result12 = getBlockResult(1, 2, board);
+        String result20 = getBlockResult(2, 0, board);
+        String result21 = getBlockResult(2, 1, board);
+        String result22 = getBlockResult(2, 2, board);
+        SudokuPutter putter00 = new SudokuPutter(sudokuId, 0, 0, result00);
+        SudokuPutter putter01 = new SudokuPutter(sudokuId, 0, 1, result01);
+        SudokuPutter putter02 = new SudokuPutter(sudokuId, 0, 2, result02);
+        SudokuPutter putter10 = new SudokuPutter(sudokuId, 1, 0, result10);
+        SudokuPutter putter11 = new SudokuPutter(sudokuId, 1, 1, result11);
+        SudokuPutter putter12 = new SudokuPutter(sudokuId, 1, 2, result12);
+        SudokuPutter putter20 = new SudokuPutter(sudokuId, 2, 0, result20);
+        SudokuPutter putter21 = new SudokuPutter(sudokuId, 2, 1, result21);
+        SudokuPutter putter22 = new SudokuPutter(sudokuId, 2, 2, result22);
         Future<String> fp00 = threadpool.submit(putter00);
         Future<String> fp01 = threadpool.submit(putter01);
         Future<String> fp02 = threadpool.submit(putter02);
@@ -122,7 +124,7 @@ public class HttpUtilTest {
 
     }
 
-    private String getBlockResult(int row,int col,char[][] board){
+    private String getBlockResult(int row, int col, char[][] board) {
         StringBuilder builder = new StringBuilder("[[");
         int row3 = row * 3;
         int col3 = col * 3;
@@ -148,32 +150,31 @@ public class HttpUtilTest {
         return result;
     }
 
-    private char[][] genBoard(int row,int col, String block,char[][] board){
-            char[] chars = block.toCharArray();
-            int row3 = row * 3;
-            int col3 = col * 3;
-            char[][] newBoard = board;
-            newBoard[0 + row3][0 + col3] = chars[2]=='0'?'.':chars[2];
-            newBoard[0 + row3][1 + col3] = chars[4]=='0'?'.':chars[4];
-            newBoard[0 + row3][2 + col3] = chars[6]=='0'?'.':chars[6];
-            newBoard[1 + row3][0 + col3] = chars[10]=='0'?'.':chars[10];
-            newBoard[1 + row3][1 + col3] = chars[12]=='0'?'.':chars[12];
-            newBoard[1 + row3][2 + col3] = chars[14]=='0'?'.':chars[14];
-            newBoard[2 + row3][0 + col3] = chars[18]=='0'?'.':chars[18];
-            newBoard[2 + row3][1 + col3] = chars[20]=='0'?'.':chars[20];
-            newBoard[2 + row3][2 + col3] = chars[22]=='0'?'.':chars[22];
-            return newBoard;
+    private char[][] genBoard(int row, int col, String block, char[][] board) {
+        char[] chars = block.toCharArray();
+        int row3 = row * 3;
+        int col3 = col * 3;
+        char[][] newBoard = board;
+        newBoard[0 + row3][0 + col3] = chars[2] == '0' ? '.' : chars[2];
+        newBoard[0 + row3][1 + col3] = chars[4] == '0' ? '.' : chars[4];
+        newBoard[0 + row3][2 + col3] = chars[6] == '0' ? '.' : chars[6];
+        newBoard[1 + row3][0 + col3] = chars[10] == '0' ? '.' : chars[10];
+        newBoard[1 + row3][1 + col3] = chars[12] == '0' ? '.' : chars[12];
+        newBoard[1 + row3][2 + col3] = chars[14] == '0' ? '.' : chars[14];
+        newBoard[2 + row3][0 + col3] = chars[18] == '0' ? '.' : chars[18];
+        newBoard[2 + row3][1 + col3] = chars[20] == '0' ? '.' : chars[20];
+        newBoard[2 + row3][2 + col3] = chars[22] == '0' ? '.' : chars[22];
+        return newBoard;
     }
 
 
-
     private static class SudokuPutter implements Callable {
-        private String sudokuId ;
+        private String sudokuId;
         private final int row;
         private final int col;
         private String result;
 
-        public SudokuPutter(String sudokuId,int row, int col, String result) {
+        public SudokuPutter(String sudokuId, int row, int col, String result) {
             this.sudokuId = sudokuId;
             this.row = row;
             this.col = col;
@@ -205,12 +206,12 @@ public class HttpUtilTest {
 
 
     private static class SudokuGetter implements Callable {
-        private String sudokuId ;
+        private String sudokuId;
         private final int row;
         private final int col;
         private char[][] board;
 
-        public SudokuGetter(String sudokuId,int row, int col, char[][] board) {
+        public SudokuGetter(String sudokuId, int row, int col, char[][] board) {
             this.sudokuId = sudokuId;
             this.row = row;
             this.col = col;
@@ -219,10 +220,10 @@ public class HttpUtilTest {
 
         @Override
         public String call() {
-            return getBlock(sudokuId,row, col, board);
+            return getBlock(sudokuId, row, col, board);
         }
 
-        private String getBlock(String sudokuId,int row, int col, char[][] board) {
+        private String getBlock(String sudokuId, int row, int col, char[][] board) {
             HttpUtil httpUtil = new HttpUtil();
 
             String block = httpUtil.sendRequest("http://svetoku.xsec.sap.corp:8888/api/svetoku/puzzles/" + sudokuId + "/blocks/" + row + "/" + col, "Get", new HashMap<>(), new HashMap<>(), HttpUtil.PARAMETER_TYPE_URLENCODED);
@@ -234,4 +235,27 @@ public class HttpUtilTest {
 
     }
 
+    @Test
+    public void checkWebPassword() {
+        List<String> passwords = FileUtil.readTxtFileIntoStringArrList("test1.txt");
+        for (String password : passwords) {
+            try {
+                if (!HttpUtil.sendLoginInfo(password)) {
+                    System.out.println("found!" + password);
+                    break;
+                }
+                System.out.println(password + "wrong");
+            } catch (Exception e) {
+                System.out.println(password + "wrong");
+            }
+        }
+    }
+
+    @Test
+    public void readDict(){
+        HttpUtil httpUtil = new HttpUtil();
+        String url = "https://raw.githubusercontent.com/shawntns/top-100-worst-passwords/master/dic.txt";
+        String s = httpUtil.sendRequest(url,"Get",new HashMap(),new HashMap(), HttpUtil.PARAMETER_TYPE_URLENCODED);
+        System.out.println(s);
+    }
 }

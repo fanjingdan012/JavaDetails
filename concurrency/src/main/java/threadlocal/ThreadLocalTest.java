@@ -1,8 +1,8 @@
 package threadlocal;
 
 public class ThreadLocalTest {
-    ThreadLocal<Long> longLocal = new ThreadLocal<Long>();
-    ThreadLocal<String> stringLocal = new ThreadLocal<String>();
+    ThreadLocal<Long> longLocal = new ThreadLocal<>();
+    ThreadLocal<String> stringLocal = new ThreadLocal<>();
  
      
     public void set() {
@@ -27,13 +27,11 @@ public class ThreadLocalTest {
         System.out.println(test.getString());
      
          
-        Thread thread1 = new Thread(){
-            public void run() {
-                test.set();
-                System.out.println(test.getLong());
-                System.out.println(test.getString());
-            };
-        };
+        Thread thread1 = new Thread(() -> {
+            test.set();
+            System.out.println(test.getLong());
+            System.out.println(test.getString());
+        });
         thread1.start();
         thread1.join();
          

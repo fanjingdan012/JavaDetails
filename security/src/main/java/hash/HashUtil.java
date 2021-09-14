@@ -93,6 +93,18 @@ public class HashUtil {
         }
         return encodestr;
     }
+    public static String sha256(byte[] bytes) {
+        MessageDigest messageDigest;
+        String encodestr = "";
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(bytes);
+            encodestr = EncodeUtil.bytes2Hex(messageDigest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return encodestr;
+    }
 
     public static String sha1(String str) {
         MessageDigest messageDigest;

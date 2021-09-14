@@ -51,6 +51,17 @@ public class HashUtilTest {
         }
 
     }
+    @Test
+    public void bruteForceSaltedMd51() throws Exception {
+        for (int i = 1000; i < 9001; i++) {
+            String md5 = HashUtil.md5("SALTY" + i);
+            if ("AAF8A6D56D4A0AB1E2D1D49329AB6956".equals(md5.toUpperCase())) {
+                System.out.println(i);
+                break;
+            }
+        }
+
+    }
 
 
     //    public static void main(String [] args) throws IOException{

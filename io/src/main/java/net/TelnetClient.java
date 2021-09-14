@@ -1,4 +1,4 @@
-package hash.md5;
+package net;
 
 import java.io.*;
 import java.net.*;

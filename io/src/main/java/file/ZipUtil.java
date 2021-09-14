@@ -61,10 +61,10 @@ public class ZipUtil {
     }
 
     public static void main(String[] args) {
-        List<String> passwords =FileUtil.readTxtFileIntoStringArrList("/Users/i312177/githubP/JavaDetails/test1.txt");
+        List<String> passwords =FileUtil.readTxtFileIntoStringArrList("D:\\githubP\\JavaDetails\\io\\pwds.txt");
         for(String password:passwords){
             try {
-                HttpClient
+                ZipUtil.unzip("D:\\githubP\\JavaDetails\\io\\1.zip", "zip", password);
                 System.out.println(password);
                 break;
             }catch (Exception e){

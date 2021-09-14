@@ -4,34 +4,45 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-
 import javax.net.ssl.SSLContext;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
-//import org.apache.http.entity.mime.MultipartEntityBuilder;
-//import org.apache.http.entity.mime.content.FileBody;
-//import org.apache.http.entity.mime.content.StringBody;
+
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 
 public class HttpUtil {
     private static final Logger LOGGER = Logger.getLogger(HttpUtil.class);
-    //private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtil.class);
     private static final String UTF_8 = "utf-8";
 
     private static final String CONTENT_TYPE_JSON = "application/json; charset=utf-8";
@@ -73,7 +84,7 @@ public class HttpUtil {
      * @return
      */
     private CloseableHttpResponse sendRequestForEntireResponse(CloseableHttpClient httpClient, String url, String method,
-                                                              Map<String, String> header, Map<String, Object> parameterMp, String parameterType) {
+                                                               Map<String, String> header, Map<String, Object> parameterMp, String parameterType) {
         HttpRequestBase httpRequest = getHttpRequest(url, method, setUpHeader(header, parameterType),
                 setUpEntity(parameterMp, parameterType));
         return getHttpResponse(httpClient, httpRequest);
@@ -93,41 +104,33 @@ public class HttpUtil {
         return getTextResponse(httpRequest);
     }
 
-    // download file from url and create file on server
-//    /**
-//     *
-//     * @param remotefileUrl
-//     *
-//     * @param localFilePath(if
-//     *            not set, will create temp file)
-//     *
-//     * @param fileName(if
-//     *            temp file, only filePrefix needed)
-//     *
-//     * @param filePrefix
-//     *
-//     * @param acceptabelFileType
-//     *
-//     * @return
-//     */
-//    public File downLoadFile(String remotefileUrl, String localFilePath, String fileName, String filePrefix,
-//            List<String> acceptabelFileType) throws IOException {
-//
-//        HttpRequestBase httpRequest = getHttpRequest(remotefileUrl, "Get",
-//                setUpHeader(new HashMap<String, String>(), null), setUpEntity(new HashMap<String, Object>(), null));
-//        CloseableHttpResponse response = null;
-//        CloseableHttpClient httpClient = null;
-//        File file = null;
-//        try {
-//            response = getHttpResponse(httpClient, httpRequest);
-//            HttpEntity entity = getResponseEntity(response);
-//            file = createLocalFile(localFilePath, fileName, filePrefix, acceptabelFileType, entity);
-//        } finally {
-//            closeConnect(response, httpClient);
-//        }
-//
-//        return file;
-//    }
+    /**
+     * download file from url and create file on server
+     * @param remotefileUrl
+     * @param localFilePath(if not set,will create temp file)
+     * @param fileName(if temp file,only filePrefix needed)
+     * @param filePrefix
+     * @param acceptabelFileType
+     * @return
+     */
+    public File downLoadFile(String remotefileUrl, String localFilePath, String fileName, String filePrefix,
+                             List<String> acceptabelFileType) throws IOException {
+
+        HttpRequestBase httpRequest = getHttpRequest(remotefileUrl, "Get",
+                setUpHeader(new HashMap<String, String>(), null), setUpEntity(new HashMap<String, Object>(), null));
+        CloseableHttpResponse response = null;
+        CloseableHttpClient httpClient = null;
+        File file = null;
+        try {
+            response = getHttpResponse(httpClient, httpRequest);
+            HttpEntity entity = getResponseEntity(response);
+            file = createLocalFile(localFilePath, fileName, filePrefix, acceptabelFileType, entity);
+        } finally {
+            closeConnect(response, httpClient);
+        }
+
+        return file;
+    }
 
     public static String buildEncodedUrl(String urlPatten, Map<String, String> urlParameterMp) {
         String url = urlPatten;
@@ -196,7 +199,7 @@ public class HttpUtil {
                 response.close();
             }
         } catch (IOException e) {
-            LOGGER.error("closeConnect fail to close response {}", e);
+            LOGGER.info("closeConnect fail to close response {}", e);
         } finally {
             if (httpClient != null) {
                 try {
@@ -267,7 +270,7 @@ public class HttpUtil {
             try {
                 String description = EntityUtils.toString(entity);
                 LOGGER.warn("server return with error status and description:{}" + description);
-                System.out.println("server return with error status and description:{}" + description+status);
+                System.out.println("server return with error status and description:{}" + description + status);
                 throw new RuntimeException(description);
             } catch (ParseException e) {
                 LOGGER.warn("parsing error description error", e);
@@ -286,54 +289,55 @@ public class HttpUtil {
         return entity;
     }
 
-//    private File createLocalFile(String localFilePath, String fileName, String filePrefix,
-//            List<String> acceptabelFileType, HttpEntity entity) {
-//        String contentType = entity.getContentType().toString();
-//        String fileType = contentType.substring(contentType.lastIndexOf("/") + 1);
-//        if (null != acceptabelFileType && !acceptabelFileType.contains(fileType)) {
-//            LOGGER.warn("Current fileType：" + fileType + " file type not allowed");
-//            throw new FileNotSupportedException(HttpErrorCode.File_Type_Not_Supported);
-//        }
-//        File file = null;
-//        InputStream is = null;
-//        FileOutputStream out = null;
-//        // create temp file
-//        try {
-//            if (StringUtils.isEmpty(localFilePath)) {
-//                file = File.createTempFile(filePrefix, UUID.randomUUID().toString() + "." + fileType);
-//            } else {
-//                // create according to localFilePath
-//            }
-//
-//            is = entity.getContent();
-//            out = new FileOutputStream(file);
-//            byte[] buf = new byte[4096];
-//            int n;
-//            while ((n = is.read(buf)) >= 0) {
-//                out.write(buf, 0, n);
-//            }
-//        } catch (IOException e) {
-//            LOGGER.warn("Create File Error with IO Exception!");
-//            throw new SystemException(e);
-//        } finally {
-//            try {
-//                if (is != null) {
-//                    is.close();
-//                }
-//            } catch (IOException e) {
-//                throw new SystemException(e);
-//            } finally {
-//                if (out != null) {
-//                    try {
-//                        out.close();
-//                    } catch (IOException e) {
-//                        throw new SystemException(e);
-//                    }
-//                }
-//            }
-//        }
-//        return file;
-//    }
+    private File createLocalFile(String localFilePath, String fileName, String filePrefix,
+                                 List<String> acceptabelFileType, HttpEntity entity) {
+        String contentType = entity.getContentType().toString();
+        String fileType = contentType.substring(contentType.lastIndexOf("/") + 1);
+        if (null != acceptabelFileType && !acceptabelFileType.contains(fileType)) {
+            LOGGER.warn("Current fileType：" + fileType + " file type not allowed");
+            throw new RuntimeException("File_Type_Not_Supported") {
+            };
+        }
+        File file = null;
+        InputStream is = null;
+        FileOutputStream out = null;
+        // create temp file
+        try {
+            if (StringUtils.isEmpty(localFilePath)) {
+                file = File.createTempFile(filePrefix, UUID.randomUUID().toString() + "." + fileType);
+            } else {
+                // create according to localFilePath
+            }
+
+            is = entity.getContent();
+            out = new FileOutputStream(file);
+            byte[] buf = new byte[4096];
+            int n;
+            while ((n = is.read(buf)) >= 0) {
+                out.write(buf, 0, n);
+            }
+        } catch (IOException e) {
+            LOGGER.warn("Create File Error with IO Exception!");
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+        return file;
+    }
 
     private HttpRequestBase getHttpRequest(String url, String method, Map<String, String> header,
                                            HttpEntity parameterEntity) {
@@ -372,7 +376,7 @@ public class HttpUtil {
     }
 
     private Map<String, String> setUpHeader(Map<String, String> originalHeader, String parameterType) {
-        Map<String, String> header = new HashMap<String, String>();
+        Map<String, String> header = new HashMap<>();
         if (originalHeader != null) {
             header.putAll(originalHeader);
         }
@@ -412,24 +416,24 @@ public class HttpUtil {
         return httpclient;
     }
 
-//    private HttpHost getProxy() {
-//
-//        HttpHost proxy = null;
-//
-//        try {
-//            String[] values = { cfg.getGlobalSettings("proxyHost"),  cfg.getGlobalSettings("proxyPort") };
-//            if (values[0] != null && !values[0].isEmpty() && values[1] != null && !values[1].isEmpty()) {
-//                int proxyPort = Integer.parseInt(values[1]);
-//                if (proxyPort > 0 && proxyPort < 65536) {
-//                    proxy = new HttpHost(values[0], proxyPort, "http");
-//                }
-//            }
-//        } catch (Exception e) {
-//            LOGGER.error("Fail to get proxy from SLD Global Settings.", e);
-//            proxy = null;
-//        }
-//        return proxy;
-//    }
+    private HttpHost getProxy() {
+
+        HttpHost proxy = null;
+
+        try {
+            String[] values = {"proxyHost",  "proxyPort" };
+            if (values[0] != null && !values[0].isEmpty() && values[1] != null && !values[1].isEmpty()) {
+                int proxyPort = Integer.parseInt(values[1]);
+                if (proxyPort > 0 && proxyPort < 65536) {
+                    proxy = new HttpHost(values[0], proxyPort, "http");
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.error("Fail to get proxy from SLD Global Settings.", e);
+            proxy = null;
+        }
+        return proxy;
+    }
 
     private static String encodeParameters(Map<String, String> urlParameterMp) {
         StringBuffer buf = new StringBuffer();
@@ -454,24 +458,24 @@ public class HttpUtil {
 
     static HttpEntity setUpEntity(Map<String, Object> parameterMp, String parameterType) {
         HttpEntity entity = null;
-//        if (PARAMETER_TYPE_MULTIPART.equals(parameterType)) {
-//            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-//            Iterator<Entry<String, Object>> iter = parameterMp.entrySet().iterator();
-//            while (iter.hasNext()) {
-//                Entry<String, Object> entry = iter.next();
-//                Object obj = entry.getValue();
-//                if (obj instanceof File) {
-//                    FileBody fbin = new FileBody((File) obj);
-//                    builder.addPart(entry.getKey(), fbin);
-//                } else {
-//                    StringBody sbin = new StringBody((String) obj, ContentType.create("text/plain", UTF_8));
-//                    LOGGER.info("multipart payload text part:{}"+ sbin);
-//                    builder.addPart(entry.getKey(), sbin);
-//                }
-//            }
-//            entity = builder.build();
-//
-//        } else
+        if (PARAMETER_TYPE_MULTIPART.equals(parameterType)) {
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+            Iterator<Entry<String, Object>> iter = parameterMp.entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<String, Object> entry = iter.next();
+                Object obj = entry.getValue();
+                if (obj instanceof File) {
+                    FileBody fbin = new FileBody((File) obj);
+                    builder.addPart(entry.getKey(), fbin);
+                } else {
+                    StringBody sbin = new StringBody((String) obj, ContentType.create("text/plain", UTF_8));
+                    LOGGER.info("multipart payload text part:{}"+ sbin);
+                    builder.addPart(entry.getKey(), sbin);
+                }
+            }
+            entity = builder.build();
+
+        } else
 
         if (PARAMETER_TYPE_JSON.equals(parameterType)) {
             ObjectMapper mapper = new ObjectMapper();
@@ -597,6 +601,39 @@ public class HttpUtil {
         }
 
     }
+
+    public static Boolean sendLoginInfo(String password) throws KeyManagementException, NoSuchAlgorithmException {
+        HttpPost post = new HttpPost("https://hotel.example.com/");
+        String  bodyStr = "email=lnorris%40bonvoyage.com&password="+password;
+        StringEntity bodyEntity = new StringEntity(bodyStr, ContentType.APPLICATION_FORM_URLENCODED);
+        post.setEntity(bodyEntity);
+        long startTime=System.currentTimeMillis();
+        SSLContextBuilder builder = new SSLContextBuilder();
+        try {
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                builder.build());
+
+        try (CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
+                sslsf).build();//HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+            System.out.println("executionTime:"+(System.currentTimeMillis()-startTime)+"ms");
+            String responseStr = EntityUtils.toString(response.getEntity());
+            return responseStr.contains("Invalid credentials");
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Exception when checking password:"+password);
+        return null;
+    }
+
 
 
 }
