@@ -1,11 +1,10 @@
 package hash;
 
 import encode.EncodeUtil;
+import net.HttpUtil;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.File;
-import java.util.List;
+import java.util.HashMap;
 
 public class CustomizedHashByPictureTest {
     CustomizedHashByPicture customizedHashByPicture = new CustomizedHashByPicture();
@@ -19,7 +18,9 @@ public class CustomizedHashByPictureTest {
 
     @Test
     public void testCustomizedHashCrack() throws Exception {
-        List<String> pwds = FileUtil.readFileByLines("10-million-password-list-top-1000000.txt");
+        HttpUtil httpUtil = new HttpUtil();
+        String pwdsStr = httpUtil.sendRequest("https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt","Get",new HashMap<>(),new HashMap<>(),HttpUtil.PARAMETER_TYPE_URLENCODED);
+        String[] pwds = pwdsStr.split("\n");
         for(String pwd:pwds){
             String hash=EncodeUtil.bytes2Hex(customizedHashByPicture.customizedHash(pwd));
             System.out.println(hash);

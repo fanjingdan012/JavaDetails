@@ -602,37 +602,7 @@ public class HttpUtil {
 
     }
 
-    public static Boolean sendLoginInfo(String password) throws KeyManagementException, NoSuchAlgorithmException {
-        HttpPost post = new HttpPost("https://hotel.example.com/");
-        String  bodyStr = "email=lnorris%40bonvoyage.com&password="+password;
-        StringEntity bodyEntity = new StringEntity(bodyStr, ContentType.APPLICATION_FORM_URLENCODED);
-        post.setEntity(bodyEntity);
-        long startTime=System.currentTimeMillis();
-        SSLContextBuilder builder = new SSLContextBuilder();
-        try {
-            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-                builder.build());
 
-        try (CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
-                sslsf).build();//HttpClients.createDefault();
-             CloseableHttpResponse response = httpClient.execute(post)) {
-            System.out.println("executionTime:"+(System.currentTimeMillis()-startTime)+"ms");
-            String responseStr = EntityUtils.toString(response.getEntity());
-            return responseStr.contains("Invalid credentials");
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Exception when checking password:"+password);
-        return null;
-    }
 
 
 

