@@ -14,6 +14,20 @@ import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.*;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -602,8 +616,35 @@ public class HttpUtil {
 
     }
 
+    public static Boolean sendLoginInfo(String password) throws KeyManagementException, NoSuchAlgorithmException {
+        HttpPost post = new HttpPost("https://hotel.example.com/");
+        String  bodyStr = "email=lnorris%40bonvoyage.com&password="+password;
+        StringEntity bodyEntity = new StringEntity(bodyStr, ContentType.APPLICATION_FORM_URLENCODED);
+        post.setEntity(bodyEntity);
+        long startTime=System.currentTimeMillis();
+        SSLContextBuilder builder = new SSLContextBuilder();
+        try {
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                builder.build());
 
-
-
-
+        try (CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(
+                sslsf).build();//HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+            System.out.println("executionTime:"+(System.currentTimeMillis()-startTime)+"ms");
+            String responseStr = EntityUtils.toString(response.getEntity());
+            return responseStr.contains("Invalid credentials");
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Exception when checking password:"+password);
+        return null;
+    }
 }
