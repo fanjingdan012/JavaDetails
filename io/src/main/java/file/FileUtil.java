@@ -390,5 +390,22 @@ public class FileUtil {
         clipboard.setContents(trans, null);
     }
 
+    public static List<String> traverseDirListFiles(String dirName) {
+        File dir = new File(dirName);
+        File[] fs = dir.listFiles();
+        List<String> fileNames = new ArrayList<>();
+        for(File f:fs){
+            if(f.isDirectory()){
+                fileNames.addAll(traverseDirListFiles(f.getAbsolutePath()));
+            }
+            if(f.isFile()){
+                fileNames.add(f.getAbsolutePath());
+                System.out.println(f.getAbsolutePath());
+            }
+
+        }
+        return fileNames;
+    }
+
 }
  

@@ -1,5 +1,6 @@
 package crypt;
 
+import file.FileUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,6 +11,13 @@ public class SymmetricTest {
         System.out.println(Symmetric.encryptAES("aaa","aaa"));
 
     }
+
+    @Test
+    public void testDecryptASE() throws Exception {
+        byte[] bytes = FileUtil.readFileByBytes("AES/allo-chal2/chal2_received_msg1");
+        System.out.println(Symmetric.decryptBitAES(bytes,"49206861766520626164206e6f73652e"));
+    }
+
     @Test
     public void testJWTHS256() throws InterruptedException {
         String key = "1c8bfe8f801d79745c4631d09fff36c82aa37fc4cce4fc946683d7b336b63032";

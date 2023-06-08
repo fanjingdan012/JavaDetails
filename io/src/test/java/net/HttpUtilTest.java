@@ -251,13 +251,15 @@ public class HttpUtilTest {
         List<String> passwords = FileUtil.readTxtFileIntoStringArrList("test1.txt");
         for (String password : passwords) {
             try {
-                if (!HttpUtil.sendLoginInfo(password)) {
-                    System.out.println("found!" + password);
+                //if (!HttpUtil.sendLoginInfo(password)) {
+                //    System.out.println("found!" + password);
+                if (!sendLoginInfo(password)) {
+                    System.out.println("found! " + password);
                     break;
                 }
-                System.out.println(password + "wrong");
+                System.out.println(password + " wrong");
             } catch (Exception e) {
-                System.out.println(password + "wrong");
+                System.out.println(password + " wrong");
             }
         }
     }

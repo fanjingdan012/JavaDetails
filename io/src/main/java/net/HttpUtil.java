@@ -279,7 +279,7 @@ public class HttpUtil {
     private HttpEntity getResponseEntity(CloseableHttpResponse response) {
         String status = String.valueOf(response.getStatusLine().getStatusCode());
         HttpEntity entity = response.getEntity();
-        if (!status.startsWith("2")) {
+        if (!status.startsWith("2")&&!status.startsWith("3")) {
             LOGGER.warn("server return with status:{}" + status);
             try {
                 String description = EntityUtils.toString(entity);

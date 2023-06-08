@@ -8,11 +8,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.google.common.primitives.Bytes;
 public class FileUtilTest {
 
     @Test
@@ -97,7 +101,6 @@ public class FileUtilTest {
         System.out.println(histo);
     }
 
-    @Test
     public void readFileByBytes(String fileName) {
         File file = new File(fileName);
         File file2 = new File("C:\\fjd\\bb.bmp");
@@ -184,7 +187,7 @@ public class FileUtilTest {
 
 
     @Test
-    public void readAABmp(String[] args) {
+    public void readAABmp() {
         String fileName = "aa.bmp";
         readFileByBytes(fileName);
 //        ReadFromFile.readFileByChars(fileName);
@@ -193,5 +196,109 @@ public class FileUtilTest {
 //        writeFileByBytes();
     }
 
+    private void convertJmockitToMockito(String fileName) throws UnsupportedEncodingException {
+        List<String> lines = FileUtil.readFileByLines(fileName);
+        boolean isFirstImport = true;
+        boolean isFirstTest = true;
+        boolean needChangeLine=true;
+        int exp = 0;
+        byte[] bytes = new byte[0];
+        for(String line:lines){
+            String lineTrim = line.trim();
+            if(lineTrim.startsWith("import")&&isFirstImport){
+                line=line+"import static org.mockito.Mockito.when;import org.mockito.Mock;import org.mockito.MockitoAnnotations;import org.testng.annotations.BeforeMethod;import org.testng.annotations.AfterMethod;import org.mockito.Mockito;import static org.mockito.ArgumentMatchers.any;import static org.mockito.ArgumentMatchers.anyString;";
+                isFirstImport=false;
+            }
+            if(lineTrim.startsWith("@Mocked")){
+                line = line.replaceFirst("@Mocked","@Mock");
+            }
+            if(lineTrim.startsWith("@Test")&&isFirstTest){
+                //add @BeforeMethod @AfterMethod
+                String beforeMethod = "  @BeforeMethod\n" +
+                        "  public void setUp() {\n" +
+                        "    MockitoAnnotations.openMocks(this);\n" +
+                        "  }\n\n";
+                String afterMethod="    @AfterMethod\n" +
+                        "    public void afterMethod() {\n" +
+                        "      Mockito.clearAllCaches();\n" +
+                        "    }";
+                line=beforeMethod+afterMethod+line;
+                isFirstTest=false;
+            }
+
+            if(lineTrim.startsWith("new Expectations")){
+                exp=1;
+                continue;
+            }
+            if(lineTrim.startsWith("{") && exp==1){
+                exp=2;
+                continue;
+            }
+            if(!lineTrim.startsWith("result")&&!lineTrim.startsWith("}") &&!lineTrim.isEmpty()&& (exp==2||exp==4)){
+                exp=3;
+                lineTrim=lineTrim.replaceAll("anyString","anyString()");
+                line="    when("+lineTrim.replaceFirst(";","")+").thenReturn(";
+                needChangeLine=false;
+            }
+            if(lineTrim.startsWith("result") && exp==3){
+                exp=4;
+                line=lineTrim.replaceFirst("result","").replaceFirst("=","").replaceFirst(";","")+");";
+                needChangeLine=true;
+            }
+            if(lineTrim.startsWith("}") && exp==4){
+                exp=5;
+                continue;
+            }
+            if(lineTrim.startsWith("};") && exp==5){
+                exp=0;
+                continue;
+            }
+            line = testRegex(line);
+            if(needChangeLine){
+                line=line+"\n";
+            }
+            byte[] lineBytes = line.getBytes("UTF-8");
+            bytes = Bytes.concat(bytes,lineBytes);
+        }
+        FileUtil.writeFile(bytes,fileName);
+
+    }
+    @Test
+    public void listFiles() throws UnsupportedEncodingException {
+        List<String> fileNames = FileUtil.traverseDirListFiles("/Users/i312177/a4/idl-employeecentralodatav2/idl-employeecentralodatav2-service/src/test/java/com/successfactors/employeecentralodatav2/");
+        for(String fileName:fileNames){
+            convertJmockitToMockito(fileName);
+        }
+    }
+
+
+    public String testRegex(String s){
+
+        String pattern = "\\([a-zA-Z<>]+\\)[ ]*any";
+
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(s);
+
+       while (m.find()) {
+                String s1 = m.group();
+                System.out.println("Match found!"+ s1);
+                Pattern p1 = Pattern.compile("\\([a-zA-Z]+");
+                Matcher m1 = p1.matcher(s1);
+                m1.find();
+                String clazz = m1.group();
+                if(clazz.contains("(List")){
+
+                    s=s.replaceFirst(pattern,"anyList()");
+                } if(clazz.contains("(Map")){
+
+               s=s.replaceFirst(pattern,"anyMap()");
+           }
+           s=s.replaceFirst(pattern,"any"+m1.group()+".class)");
+       }
+
+        System.out.println(s);
+       return s;
+
+    }
 
 }
