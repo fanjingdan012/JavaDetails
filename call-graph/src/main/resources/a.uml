@@ -1,0 +1,14 @@
+@startuml
+hide empty circle
+hide empty members
+left to right direction
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam defaultTextAlignment center
+
+component CallGraphTransformer as " CallGraphTransformer" {
+  component CallGraphTransformer_transform as " +O transform"
+}
+
+
+@enduml

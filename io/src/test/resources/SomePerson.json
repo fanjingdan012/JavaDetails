@@ -1,0 +1,9 @@
+{
+  "ssn": "001",
+  "birthday": "01.01.2020",
+  "address": {
+    "city": "London",
+    "country": "UK"
+  },
+  "notExistProperty": "aaa"
+}
